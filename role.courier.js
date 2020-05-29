@@ -63,7 +63,7 @@ var roleCourier = {
                     host = Game.spawns['Spawn1'];
                 }
                 else {
-                    host = creep.pos.findClosestByPath(FIND_CREEPS, {
+                    host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                         filter: function(object) {
                             return (object.memory.role == 'upgrader' || object.memory.role == 'stocker' || object.memory.role == 'builder') && object.store.getFreeCapacity() - object.memory.reserved > 0;
                         }
