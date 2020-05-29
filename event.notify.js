@@ -11,39 +11,21 @@ var eventNotify = {
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'harvester');
         message += 'Creeps: harvester: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='H';
-        }
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'upgrader');
         message += '        upgrader: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='U';
-        }
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'builder');
         message += '        builder: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='B';
-        }
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'courier');
         message += '        courier: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='C';
-        }
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'stocker');
         message += '        stocker: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='S';
-        }
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'tramp');
         message += '        tramp: '+creeps.length+'\n';
-        for(var i in creeps) {
-            map[creeps[i].pos.y][creeps[i].pos.x]='T';
-        }
 
         message += 'Death during last period: '+Game.spawns['Spawn1'].memory.death+'\n';
         
