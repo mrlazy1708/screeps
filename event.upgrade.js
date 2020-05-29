@@ -17,7 +17,7 @@ var eventUpgrade = {
                 var _creep = Memory.creeps[name];
                 if(_creep && _creep.role == 'courier') {
                     if(_creep.reserved != 0) {
-                        var _target = Game.getObjectByID(_creep.targetID);
+                        var _target = Game.getObjectById(_creep.targetID);
                         if(_target) {
                             _target.memory.reserved -= _creep.reserved;
                         }
