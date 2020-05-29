@@ -54,8 +54,10 @@ var eventNotify = {
         Game.spawns['Spawn1'].memory.death = 0;
         Game.spawns['Spawn1'].memory.assign = 0;
 
+        message += 'isit working?';
+
         console.log(message);
-        Game.notify(message+' is it working???');
+        Game.notify(message);
 	}
 };
 
