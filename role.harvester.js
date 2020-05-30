@@ -17,9 +17,8 @@ var roleHarvester = {
             }
         }
 
-        if(creep.state == 'arrive') {
-            const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID).pos);
-            console.log(Game.getObjectById(creep.memory.containerID).pos);
+        if(creep.memory.state == 'arrive') {
+            const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID));
             if(path.length > 0) {
                 creep.move(path[0].direction);
             }
