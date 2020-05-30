@@ -65,9 +65,16 @@ var roleCourier = {
                 else {
                     host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                         filter: function(object) {
-                            return (object.memory.role == 'upgrader' || object.memory.role == 'stocker' || object.memory.role == 'builder') && object.store.getFreeCapacity() - object.memory.reserved > 0;
+                            return object.memory.role == 'stocker' && object.store.getFreeCapacity() - object.memory.reserved > 0;
                         }
                     });
+                    if(host == null) {
+                        host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                            filter: function(object) {
+                                return (object.memory.role == 'upgrader' || object.memory.role == 'builder') && object.store.getFreeCapacity() - object.memory.reserved > 0;
+                            }
+                        });
+                    }
                 }
                 if(host != null) {
                     host.memory.reserved += creep.store[RESOURCE_ENERGY];
