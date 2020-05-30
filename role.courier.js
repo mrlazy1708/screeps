@@ -24,7 +24,7 @@ var roleCourier = {
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
                     Game.spawns['Spawn1'].memory.assign++;
-                    console.log('courier #'+creep.id+' will fetch '+creep.memory.reserved+' energy from container #'+target.id);
+                    console.log('creep #'+creep.id+' will fetch '+creep.memory.reserved+' energy from container #'+target.id);
                 }
             }
         }
