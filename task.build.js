@@ -1,7 +1,7 @@
+var roleBuilder = require('role.builder');
 var roleCourier = require('role.courier');
 var roleHarvester = require('role.harvester');
 var roleSpawn = require('role.spawn');
-var roleUpgrader = require('role.upgrader');
 
 var taskUpgrade = {
     run: function() {
@@ -23,7 +23,7 @@ var taskUpgrade = {
                 Game.spawns['Spawn1'].memory.death++;
                 continue;
             }
-
+            
             if(creep.memory.role == 'courier') {
                 roleCourier.run(creep);
                 if(creep.memory.state == 'idle' || creep.memory.state == 'carry') {
@@ -36,33 +36,23 @@ var taskUpgrade = {
                 nHarvester++;
             }
             
-            if(creep.memory.role == 'upgrader') {
-                roleUpgrader.run(creep);
+            if(creep.memory.role == 'worker') {
+                roleBuilder.run(creep);
                 nWorker++;
             }
         }
         
         roleSpawn.run(Game.spawns['Spawn1']);
-
+        
         if(!Game.spawns['Spawn1'].spawning) {
             if(nHarvester < 2 && nFreeCourier >= 1 ) {
-                var containers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
-                    filter: function(object) {
-                        return object.structureType == STRUCTURE_CONTAINER;
-                    }
-                });
-                if(containers.length) {
-                    Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
-                }
-                else {
-                    Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
-                }
+                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
             }
             else if(nFreeCourier < 1) {
                 Game.spawns['Spawn1'].spawnCreep( [CARRY, CARRY, MOVE, MOVE], 'Courier_'+Game.time, { memory: { role: 'courier', state: 'idle', reserved: 0 } } );
             }
-            else if(nUpgrader < 4 ) {
-                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
+            else if(nWorker < 1) {
+                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
             }
         }
 
