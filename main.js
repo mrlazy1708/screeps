@@ -1,3 +1,4 @@
+var roleTower = require('role.tower');
 var taskBuild = require('task.build');
 var taskInit = require('task.init');
 var taskNotify = require('task.notify');
@@ -12,6 +13,14 @@ module.exports.loop = function () {
 	else {
     	taskUpgrade.run();
 	}
+	var towers = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        filter: function(object) {
+            return object.structureType == STRUCTURE_TOWER;
+        }
+    });
+    for(var index in towers) {
+
+    }
     if(Game.time % 300 == 0) {
         taskNotify.run();
     }
