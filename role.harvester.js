@@ -21,6 +21,7 @@ var roleHarvester = {
         if(creep.memory.state == 'arrive') {
             const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID));
             if(path.length > 0) {
+                creep.say('🎯');
                 creep.move(path[0].direction);
             }
             else {
@@ -33,9 +34,8 @@ var roleHarvester = {
                 creep.memory.state = 'idle';
             }
             else {
-                if( creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
-                    creep.say('🎯');
+                if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
+                    creep.memory.state = 'arrive';
                 }
                 else {
                     creep.say('🚨️️');

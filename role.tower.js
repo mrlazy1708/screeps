@@ -6,11 +6,13 @@ var roleTower = {
                 tower.memory.state = 'full';
             }
         }
-
-        if(tower.memory.state == 'full') {
+        else if(tower.memory.state == 'full') {
             if(tower.store.getFreeCapacity(RESOURCE_ENERGY) * 2 >= tower.store.getCapacity(RESOURCE_ENERGY)) {
                 tower.memory.state = 'fill';
             }
+        }
+        else {
+            tower.memory.state = 'fill';
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {
