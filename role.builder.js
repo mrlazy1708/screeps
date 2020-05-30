@@ -4,6 +4,7 @@ var roleBuilder = {
         if(creep.memory.state == 'idle') {
             creep.say('💤');
             var target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+            console.log(target);
             if(target != null) {
                 creep.memory.targetID = target.id;
                 creep.memory.state = 'work';
