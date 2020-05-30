@@ -1,5 +1,3 @@
-var roleTramp = require('role.tramp');
-
 var roleCourier = {
     run: function(creep) {
         var target = Game.getObjectById(creep.memory.targetID);
@@ -31,10 +29,6 @@ var roleCourier = {
                     creep.memory.state = 'get';
                     Game.spawns['Spawn1'].memory.assign++;
                     console.log('creep #'+creep.id+' will fetch '+creep.memory.reserved+' energy from creep #'+host.id);
-                }
-                else {
-                    roleTramp.run(creep);
-                    return;
                 }
             }
         }
