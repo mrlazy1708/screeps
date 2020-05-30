@@ -4,10 +4,18 @@ var taskInit = require('task.init');
 var taskNotify = require('task.notify');
 var taskUpgrade = require('task.upgrade');
 
-let ablee = true;
-
 module.exports.loop = function () {
 	taskInit.run();
+	if(Memory.okma == undefined) {
+		var extensions = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
+	        filter: {structureType: STRUCTURE_EXTENSION}
+	    });
+	    for(var index in extensions) {
+	    	extensions[index].memory.reserved = 0;
+	    }
+	    Memory.okma = 'okle';
+
+	}
 	var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
 	if(constructionSites.length) {
 		taskBuild.run();

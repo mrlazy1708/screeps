@@ -71,14 +71,14 @@ var roleCourier = {
                 }
                 else {
                     host = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                        filter: (structure) => { 
-                            return structure.structureType == STRUCTURE_EXTENSION && structure.energy < structure.energyCapacity
+                        filter: (object) => { 
+                            return object.structureType == STRUCTURE_EXTENSION && object.energy + object.memory.reserved < object.energyCapacity;
                         }
                     });
                     if(host == null) {
                         host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                             filter: function(object) {
-                                return object.memory.role == 'worker' && object.store.getFreeCapacity() - object.memory.reserved > 0;
+                                return object.memory.role == 'worker' && object.store.getFreeCapacity() - object.memory.reserved > -200;
                             }
                         });
                         if(host == null) {
