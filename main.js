@@ -13,6 +13,7 @@ module.exports.loop = function () {
 	    for(var index in extensions) {
 	    	extensions[index].memory.reserved = 0;
 	    }
+	    console.log('Execute reset');
 	    Memory.okma = false;
 	}
 	var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
