@@ -18,9 +18,11 @@ module.exports.loop = function () {
 	}
 	var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
 	if(constructionSites.length) {
+		console.log('task: build');
 		taskBuild.run();
 	}
 	else {
+		conosle.log('task: upgrade');
     	taskUpgrade.run();
 	}
 	var towers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
