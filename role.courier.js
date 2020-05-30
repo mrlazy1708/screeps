@@ -61,13 +61,14 @@ var roleCourier = {
 
         if(creep.memory.state == 'flee->carry') {
             let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
-                if(path.length > 0) {
-                    creep.moveByPath(path);
-                    creep.say('⏏️');
-                }
-                else {
-                    creep.memory.state = 'carry';
-                }
+            console.log(path);
+            if(path.length > 0) {
+                creep.moveByPath(path);
+                creep.say('⏏️');
+            }
+            else {
+                creep.memory.state = 'carry';
+            }
         }
         
         if(creep.memory.state == 'carry') {
@@ -142,13 +143,13 @@ var roleCourier = {
 
         if(creep.memory.state == 'flee->idle') {
             let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
-                if(path.length > 0) {
-                    creep.moveByPath(path);
-                    creep.say('⏏️');
-                }
-                else {
-                    creep.memory.state = 'idle';
-                }
+            if(path.length > 0) {
+                creep.moveByPath(path);
+                creep.say('⏏️');
+            }
+            else {
+                creep.memory.state = 'idle';
+            }
         }
 
 	}
