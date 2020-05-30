@@ -96,7 +96,7 @@ var roleCourier = {
         }
             
         if(creep.memory.state == 'give') {
-            if(target.store.getFreeCapacity(RESOURCE_ENERGY) == 0){
+            if(target.store.getFreeCapacity(RESOURCE_ENERGY) == 0 || creep.store[RESOURCE_ENERGY] == 0){
                 target.memory.reserved -= creep.memory.reserved;
                 creep.memory.reserved = 0;
                 creep.memory.state = 'idle';
