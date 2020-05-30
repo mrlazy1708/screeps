@@ -4,7 +4,7 @@ var roleTramp = {
     run: function(creep) {
         
         if(creep.memory.state == 'idle') {
-            if(creep.store.getFreeCapacity() != 0) {
+            if(creep.store.getFreeCapacity() < creep.store.getCapacity()/2) {
                 var target = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
                 if(target) {
                     if(creep.pickup(target) == ERR_NOT_IN_RANGE) {

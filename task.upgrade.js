@@ -7,7 +7,7 @@ var roleTramp = require('role.tramp');
 var roleUpgrader = require('role.upgrader');
 var roleWorker = require('role.worker');
 
-var eventUpgrade = {
+var taskUpgrade = {
     run: function() {
         var nWorker = 0, nFreeCourier = 0, nHarvester = 0, nUpgrader = 0, nStocker = 0, nBuilder = 0, nFreeBuilder = 0, nFreeTramp = 0;
         
@@ -107,4 +107,4 @@ var eventUpgrade = {
 	}
 };
 
-module.exports = eventUpgrade;
+module.exports = taskUpgrade;
