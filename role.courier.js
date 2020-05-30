@@ -41,7 +41,7 @@ var roleCourier = {
                 creep.say('📦');
             }
             else {
-                var ERR = target.transfer(creep, RESOURCE_ENERGY);
+                var ERR = creep.withdraw(target, RESOURCE_ENERGY);
                 target.memory.reserved -= creep.memory.reserved - creep.store.getFreeCapacity();
                 creep.memory.reserved = creep.store.getFreeCapacity();
                 if(ERR == ERR_NOT_IN_RANGE) {
