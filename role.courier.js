@@ -62,7 +62,7 @@ var roleCourier = {
         if(creep.memory.state == 'flee->carry') {
             let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
             console.log(path);
-            if(path.length > 0) {
+            if(path.length > 0 && 0) {
                 creep.moveByPath(path);
                 creep.say('⏏️');
             }
@@ -143,7 +143,7 @@ var roleCourier = {
 
         if(creep.memory.state == 'flee->idle') {
             let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
-            if(path.length > 0) {
+            if(path.length > 0 && 0) {
                 creep.moveByPath(path);
                 creep.say('⏏️');
             }
