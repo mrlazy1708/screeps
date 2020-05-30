@@ -1,6 +1,6 @@
 var roleUpgrader = {
     run: function(creep) {
-        console.log('dfhgf');
+        
         if(creep.memory.state == 'idle') {
             creep.say('💤');
             const _path = creep.pos.findPathTo(Game.flags['Flag_upgrade'].pos);

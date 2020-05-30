@@ -3,11 +3,12 @@ var roleHarvester = {
 
         if(creep.memory.state == 'idle') {
             creep.say('💤');
-            var sources = creep.room.find(FIND_SOURCES);
-            for(var index in sources) {
-                var source = sources[index], peers = _.filter(Game.creeps, object => object.memory.targetID == source.id);
-                if(peers.length < 1) {
-                    creep.memory.targetID = source.id;
+            var containers = creep.room.find(FIND_STRUCTURES, {
+                filter: {structureType: STRUCTURE_CONTAINER}
+            });
+            for(var index in containers) {
+                if(Game.getObjectById(containers[index].memory.host) == null) {
+                    creep.memory.targetID = containers[index].pos.findClosestByRange(FIND_SOURCE).id;
                     creep.memory.state = 'work';
                     break;
                 }
