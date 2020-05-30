@@ -24,7 +24,7 @@ module.exports.loop = function () {
 		}
 	});
 	var sor = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
-	sor.memory.newone = 'is it working???';
+	sor[0].memory.newone = 'is it working???';
     eventUpgrade.run();
     if(Game.time % 300 == 0) {
         eventNotify.run();
