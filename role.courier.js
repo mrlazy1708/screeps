@@ -5,14 +5,14 @@ var roleCourier = {
             creep.memory.state = 'idle';
         }
         
-        if(creep.memory.state == 'idle') {
+        if(creep.memory.state == 'idle' || 1) {
             creep.say('💤');
             if(creep.store.getFreeCapacity() == 0) {
                 creep.memory.state = 'carry';
             }
             else {
                 var containers = creep.room.find(FIND_STRUCTURES, {
-                    filter: {structureType: STRUCTURE_TOWER}
+                    filter: {structureType: STRUCTURE_CONTAINER}
                 });
                 var host = null, maxv = 0;
                 for(var index in containers) {
