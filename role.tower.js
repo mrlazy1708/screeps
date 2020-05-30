@@ -3,7 +3,7 @@ var roleTower = {
         if(tower.store[RESOURCE_ENERGY] >= 10) {
             var target = tower.pos.findClosestByRange(FIND_MY_STRUCTURES, {
                 filter: function(object) {
-                    return object.hitsMax - object.hits >= 200;
+                    return object.hitsMax - object.hits >= 200 || 1;
                 }
             });
             console.log(target);
