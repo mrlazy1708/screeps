@@ -1,6 +1,18 @@
 var roleTower = {
     run: function(tower) {
-        
+
+        if(tower.memory.state == 'fill') {
+            if(tower.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
+                tower.memory.state = 'full';
+            }
+        }
+
+        if(tower.memory.state == 'full') {
+            if(tower.store.getFreeCapacity(RESOURCE_ENERGY) * 2 >= tower.store.getCapacity(RESOURCE_ENERGY)) {
+                tower.memory.state = 'fill';
+            }
+        }
+
         if(tower.store[RESOURCE_ENERGY] >= 10) {
             var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: function(object) {
