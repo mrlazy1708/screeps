@@ -11,7 +11,7 @@ var roleCourier = {
                 creep.memory.state = 'carry';
             }
             else {
-                target = creep.room.findClosestByPath(FIND_STRUCTURES, {
+                target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: function(object) {
                         return object.structureType == STRUCTURE_CONTAINER && object.store[RESOURCE_ENERGY] - object.memory.reserved > 0;
                     }
