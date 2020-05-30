@@ -33,13 +33,13 @@ module.exports.loop = function () {
 			console.log('task: upgrade');
 	    	taskUpgrade.run();
 		}
-		var towers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
-	        filter: {structureType: STRUCTURE_TOWER}
-	    });
-	    for(var index in towers) {
-	    	roleTower.run(towers[index]);
-	    }
 	}
+	var towers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
+        filter: {structureType: STRUCTURE_TOWER}
+    });
+    for(var index in towers) {
+    	roleTower.run(towers[index]);
+    }
     if(Game.time % 300 == 0) {
         taskNotify.run(enemys);
     }
