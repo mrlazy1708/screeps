@@ -18,7 +18,7 @@ var roleTower = {
         if(tower.store[RESOURCE_ENERGY] >= 10) {
             var enemys = tower.room.find(FIND_HOSTILE_CREEPS);
             if(enemys.length) {
-                tower.attack(enemys[0]);
+                console.log(tower.attack(enemys[0]));
             }
             else {
                 var injured = tower.pos.findClosestByRange(FIND_MY_CREEPS, {
