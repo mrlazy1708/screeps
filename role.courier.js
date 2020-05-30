@@ -21,6 +21,13 @@ var roleCourier = {
                         maxv = host.store[RESOURCE_ENERGY] - host.memory.reserved;
                     }
                 }
+                if(host == null) {
+                    var host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                        filter: function(object) {
+                            return (object.memory.role == 'harvester') && (object.store[RESOURCE_ENERGY] - object.memory.reserved > 0);
+                        }
+                    });
+                }
                 if(host != null) {
                     host.memory.reserved += creep.store.getFreeCapacity();
                     creep.memory.reserved = creep.store.getFreeCapacity();
