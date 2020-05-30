@@ -18,7 +18,7 @@ var roleHarvester = {
 
         if(creep.state == 'arrive') {
             const path = creep.pos.findPathTo(target);
-            if(path.length > =0) {
+            if(path.length > 0) {
                 creep.move(path[0].direction);
             }
             else {
