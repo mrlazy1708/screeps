@@ -3,7 +3,7 @@ var roleCourier = require('role.courier');
 var roleHarvester = require('role.harvester');
 var roleSpawn = require('role.spawn');
 
-var taskUpgrade = {
+var taskBuild = {
     run: function() {
         var nFreeCourier = 0, nHarvester = 0, nWorker = 0;
         
@@ -51,7 +51,7 @@ var taskUpgrade = {
             else if(nFreeCourier < 1) {
                 Game.spawns['Spawn1'].spawnCreep( [CARRY, CARRY, MOVE, MOVE], 'Courier_'+Game.time, { memory: { role: 'courier', state: 'idle', reserved: 0 } } );
             }
-            else if(nWorker < 1) {
+            else if(nWorker < 3) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
             }
         }
@@ -59,4 +59,4 @@ var taskUpgrade = {
 	}
 };
 
-module.exports = taskUpgrade;
+module.exports = taskBuild;
