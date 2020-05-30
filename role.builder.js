@@ -14,9 +14,12 @@ var roleBuilder = {
             if(creep.store[RESOURCE_ENERGY] != 0) {
                 var target = Game.getObjectById(creep.memory.targetID);
                 if(target != null) {
-                    if(creep.build(target) == ERR_NOT_IN_RANGE) {
+                    var ERR = creep.build(target);
+                    if(ERR == ERR_NOT_IN_RANGE) {
                         creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffffff'}});
                         creep.say('🎯');
+                    }
+                    else if(ERR == ERR_INVALID_TARGET) {
                     }
                     else {
                         creep.say('🚧');

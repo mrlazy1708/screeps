@@ -1,9 +1,5 @@
 var roleHarvester = {
     run: function(creep) {
-        
-var xxx = Game.getObjectById('5ed1ffc870e2816d99eddb74');
-creep.pickup(xxx);
-creep.drop(RESOURCE_ENERGY);
 
         if(creep.memory.state == 'idle') {
             creep.say('💤');

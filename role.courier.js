@@ -11,11 +11,16 @@ var roleCourier = {
                 creep.memory.state = 'carry';
             }
             else {
-                var host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
-                    filter: function(object) {
-                        return (object.memory.role == 'harvester') && (object.store[RESOURCE_ENERGY] - object.memory.reserved > 0);
-                    }
+                var containers = creep.room.find(FIND_STRUCTURES, {
+                    filter: {structureType: STRUCTURE_TOWER}
                 });
+                var host = null, maxv = 0;
+                for(var index in containers) {
+                    if(containers[index].store[RESOURCE_ENERGY] - containers[index].memory.reserved > maxv) {
+                        host = conatiners[index];
+                        maxv = host.store[RESOURCE_ENERGY] - host.memory.reserved;
+                    }
+                }
                 if(host != null) {
                     host.memory.reserved += creep.store.getFreeCapacity();
                     creep.memory.reserved = creep.store.getFreeCapacity();
