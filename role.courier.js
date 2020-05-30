@@ -78,7 +78,7 @@ var roleCourier = {
                     if(host == null) {
                         host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                             filter: function(object) {
-                                return object.memory.role == 'worker' /*&& object.store[RESOURCE_ENERGY] + object.memory.reserved < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*5*/;
+                                return object.memory.role == 'worker' && object.store[RESOURCE_ENERGY] + object.memory.reserved < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*5;
                             }
                         });
                         if(host == null) {
