@@ -22,7 +22,7 @@ module.exports.loop = function () {
 		taskBuild.run();
 	}
 	else {
-		conosle.log('task: upgrade');
+		console.log('task: upgrade');
     	taskUpgrade.run();
 	}
 	var towers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
