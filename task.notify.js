@@ -35,7 +35,7 @@ var taskNotify = {
         
         if(enemys.length) {
             message += 'Under attack!\n';
-            message += enemys.length+'creeps of user '+enemys[0].owner+'enters room '+Game.spawns['Spawn1'].room.name;
+            message += enemys.length+'creep'+(enemys.length==1?'':'s')+' of user '+enemys[0].owner+'enters room '+Game.spawns['Spawn1'].room.name;
         }
 
         Game.spawns['Spawn1'].memory.death = 0;

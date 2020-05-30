@@ -16,13 +16,29 @@ var roleTower = {
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {
-            var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {
-                filter: function(object) {
-                    return object.hitsMax - object.hits >= 10 && object.structureType != STRUCTURE_WALL;
+            var enemys = tower.room.find(FIND_HOSTILE_CREEPS);
+            if(enemys.length) {
+                tower.attack(enemys[0]);
+            }
+            else {
+                var injured = tower.pos.findClosestByRange(FIND_MY_CREEPS, {
+                    filter: function(object) {
+                        return object.hitsMax - object.hits > 0;
+                    }
+                });
+                if(injured) {
+                    tower.heal(injured);
                 }
-            });
-            if(target) {
-                tower.repair(target);
+                else {
+                    var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+                        filter: function(object) {
+                            return object.hitsMax - object.hits >= 10 && object.structureType != STRUCTURE_WALL;
+                        }
+                    });
+                    if(target) {
+                        tower.repair(target);
+                    }
+                }
             }
         }
 	}
