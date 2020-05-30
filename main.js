@@ -6,7 +6,7 @@ var taskUpgrade = require('task.upgrade');
 
 module.exports.loop = function () {
 	taskInit.run();
-	if(Memory.reser == true) {
+	if(Memory.reset == true) {
 		var extensions = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
 	        filter: {structureType: STRUCTURE_EXTENSION}
 	    });
@@ -14,7 +14,7 @@ module.exports.loop = function () {
 	    	extensions[index].memory.reserved = 0;
 	    }
 	    console.log('Execute reset');
-	    Memory.okma = false;
+	    Memory.reset = false;
 	}
 	var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
 	if(constructionSites.length) {
