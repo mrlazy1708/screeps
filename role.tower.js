@@ -6,6 +6,7 @@ var roleTower = {
                     return object.hitsMax - object.hits >= 200;
                 }
             });
+            console.log(target);
             if(target) {
                 tower.repair(target);
             }
