@@ -23,7 +23,7 @@ module.exports.loop = function () {
 			Memory.myStructuresMemory[this.id] = value;
 		}
 	});
-	var sor = Game.spawns['Spawn1'].room.find(FIND_SOURCES);
+	var sor = Game.spawns['Spawn1'].room.find(FIND_STRUCTURES);
 	console.log(sor[0]);
 	sor[0].memory.newone = 'is it working???';
     eventUpgrade.run();
