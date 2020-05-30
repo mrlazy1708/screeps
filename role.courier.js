@@ -22,7 +22,7 @@ var roleCourier = {
                     }
                 }
                 if(host == null) {
-                    var host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                    host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                         filter: function(object) {
                             return (object.memory.role == 'harvester') && (object.store[RESOURCE_ENERGY] - object.memory.reserved > 0);
                         }
