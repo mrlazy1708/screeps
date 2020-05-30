@@ -1,5 +1,5 @@
 var taskInit = {
-    run: function() {
+    run: function() {/*
         Object.defineProperty(Source.prototype, 'memory', {
             get: function() {
                 if(_.isUndefined(Memory.sources)) {
@@ -19,7 +19,7 @@ var taskInit = {
                 }
                 Memory.sources[this.id] = value;
             }
-        });
+        });*/
         Object.defineProperty(Structure.prototype, 'memory', {
             configurable: true,
             get: function() {
