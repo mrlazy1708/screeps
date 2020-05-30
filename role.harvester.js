@@ -9,6 +9,7 @@ var roleHarvester = {
             for(var index in containers) {
                 if(Game.getObjectById(containers[index].memory.host) == null) {
                     target = containers[index].pos.findClosestByRange(FIND_SOURCES);
+                    creep.memory.containerID = containers[index].id;
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'arrive';
                     break;
@@ -17,7 +18,7 @@ var roleHarvester = {
         }
 
         if(creep.state == 'arrive') {
-            const path = creep.pos.findPathTo(target);
+            const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID));
             console.log(path);
             if(path.length > 0) {
                 creep.move(path[0].direction);
