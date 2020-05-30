@@ -1,5 +1,5 @@
 var taskNotify = {
-    run: function() {
+    run: function(enemys) {
 
         var message = 'Game report of room '+Game.spawns['Spawn1'].room.name+'\n';
 
@@ -33,6 +33,11 @@ var taskNotify = {
         
         message += 'Room controller: level: '+Game.spawns['Spawn1'].room.controller.level+', progress: '+Game.spawns['Spawn1'].room.controller.progress+'/'+Game.spawns['Spawn1'].room.controller.progressTotal+'\n';
         
+        if(enemys.length) {
+            message += 'Under attack!\n';
+            message += enemys.length+'creeps of user '+enemys[0].owner+'enters room '+Game.spawns['Spawn1'].room.name;
+        }
+
         Game.spawns['Spawn1'].memory.death = 0;
         Game.spawns['Spawn1'].memory.assign = 0;
 
