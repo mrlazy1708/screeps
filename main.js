@@ -4,6 +4,8 @@ var taskInit = require('task.init');
 var taskNotify = require('task.notify');
 var taskUpgrade = require('task.upgrade');
 
+let ablee = true;
+
 module.exports.loop = function () {
 	taskInit.run();
 	var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
@@ -14,9 +16,7 @@ module.exports.loop = function () {
     	taskUpgrade.run();
 	}
 	var towers = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
-        filter: function(object) {
-            return object.structureType == STRUCTURE_TOWER;
-        }
+        filter: {structureType: STRUCTURE_TOWER}
     });
     for(var index in towers) {
     	roleTower.run(towers[index]);
