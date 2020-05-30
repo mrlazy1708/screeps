@@ -102,6 +102,12 @@ var roleCourier = {
                 creep.memory.state = 'idle';
                 creep.say('✅︎️');
             }
+            else if(target.memory.role != 'worker' && target.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
+                target.memory.reserved -= creep.memory.reserved;
+                creep.memory.reserved = 0;
+                creep.memory.state = 'carry';
+                creep.say('✅︎️');
+            }
             else {
                 var ERR = creep.transfer(target, RESOURCE_ENERGY);
                 target.memory.reserved -= creep.memory.reserved - creep.store[RESOURCE_ENERGY];
