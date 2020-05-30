@@ -18,6 +18,7 @@ module.exports.loop = function () {
 	    Memory.reset = false;
 	}
 	var enemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
+	console.log(enemys);
 	if(enemys.length) {
 		console.log('Under attack!');
 		taskDefense.run(enemys);
