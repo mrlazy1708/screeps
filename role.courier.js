@@ -38,7 +38,7 @@ var roleCourier = {
                 if(creep.store.getFreeCapacity() == 0){
                     target.memory.reserved -= creep.memory.reserved;
                     creep.memory.reserved = 0;
-                    creep.memory.state = 'flee';
+                    creep.memory.state = 'flee->carry';
                 }
                 else {
                     var ERR = creep.withdraw(target, RESOURCE_ENERGY);
