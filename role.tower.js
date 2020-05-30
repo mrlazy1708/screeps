@@ -1,8 +1,6 @@
 var roleTower = {
     run: function(tower) {
-        if(ablee == true) {
-            console.log('fdsfsf');
-        }
+        
         if(tower.store[RESOURCE_ENERGY] >= 10) {
             var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {
                 filter: function(object) {
