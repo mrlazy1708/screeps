@@ -2,6 +2,7 @@ var roleBuilder = require('role.builder');
 var roleCourier = require('role.courier');
 var roleHarvester = require('role.harvester');
 var roleSpawn = require('role.spawn');
+var roleTramp = require('role.tramp');
 
 var taskUpgrade = {
     run: function() {
@@ -26,6 +27,13 @@ var taskUpgrade = {
             
             if(creep.memory.role == 'courier') {
                 roleCourier.run(creep);
+                if(creep.memory.state == 'idle' || creep.memory.state == 'carry') {
+                    nFreeCourier++;
+                }
+            }
+
+            if(creep.memory.role == 'tramp') {
+                roleTramp.run(creep);
                 if(creep.memory.state == 'idle' || creep.memory.state == 'carry') {
                     nFreeCourier++;
                 }
