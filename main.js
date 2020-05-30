@@ -17,7 +17,7 @@ module.exports.loop = function () {
 	    console.log('Execute reset');
 	    Memory.reset = false;
 	}
-	var enemys = tower.room.find(FIND_HOSTILE_CREEPS);
+	var enemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
 	if(enemys.length) {
 		taskDefense.run(enemys);
 	}
