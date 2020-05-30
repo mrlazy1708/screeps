@@ -17,7 +17,7 @@ var roleCourier = {
                     }
                 });
                 if(target != null) {
-                    host.memory.reserved += creep.store.getFreeCapacity();
+                    target.memory.reserved += creep.store.getFreeCapacity();
                     creep.memory.reserved = creep.store.getFreeCapacity();
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
