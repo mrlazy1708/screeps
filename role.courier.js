@@ -6,7 +6,6 @@ var roleCourier = {
         }
 
         if(creep.memory.state == 'idle') {
-            creep.say('💤');
             if(creep.store.getFreeCapacity() == 0) {
                 creep.memory.state = 'carry';
             }
@@ -16,7 +15,10 @@ var roleCourier = {
                         return object.structureType == STRUCTURE_CONTAINER && object.store[RESOURCE_ENERGY] - object.memory.reserved > 0;
                     }
                 });
-                if(target != null) {
+                if(target == null) {
+                    creep.say('💤');
+                }
+                else {
                     target.memory.reserved += creep.store.getFreeCapacity();
                     creep.memory.reserved = creep.store.getFreeCapacity();
                     creep.memory.targetID = target.id;
@@ -28,25 +30,31 @@ var roleCourier = {
         }
         
         if(creep.memory.state == 'get') {
-            if(creep.store.getFreeCapacity() == 0){
-                target.memory.reserved -= creep.memory.reserved;
-                creep.memory.reserved = 0;
-                creep.memory.state = 'carry';
-                creep.say('📦');
+            if(target == null) {
+                creep.memory.state = 'idle';
+                creep.say('💤');
             }
             else {
-                var ERR = creep.withdraw(target, RESOURCE_ENERGY);
-                target.memory.reserved -= creep.memory.reserved - creep.store.getFreeCapacity();
-                creep.memory.reserved = creep.store.getFreeCapacity();
-                if(ERR == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
-                    creep.say('📥');
-                }
-                else if(ERR == ERR_NOT_ENOUGH_RESOURCES) {
-                    creep.state = 'idle';
+                if(creep.store.getFreeCapacity() == 0){
+                    target.memory.reserved -= creep.memory.reserved;
+                    creep.memory.reserved = 0;
+                    creep.memory.state = 'carry';
                 }
                 else {
-                    creep.say('🔄');
+                    var ERR = creep.withdraw(target, RESOURCE_ENERGY);
+                    target.memory.reserved -= creep.memory.reserved - creep.store.getFreeCapacity();
+                    creep.memory.reserved = creep.store.getFreeCapacity();
+                    if(ERR == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
+                        creep.say('📥');
+                    }
+                    else if(ERR == ERR_NOT_ENOUGH_RESOURCES) {
+                        creep.state = 'idle';
+                        creep.say('💤');
+                    }
+                    else {
+                        creep.say('🔄');
+                    }
                 }
             }
         }
