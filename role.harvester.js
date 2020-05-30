@@ -23,7 +23,7 @@ var roleHarvester = {
                 creep.move(path[0].direction);
             }
             else {
-                creep.state = 'work';
+                creep.memory.state = 'work';
             }
         }
         
