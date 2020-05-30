@@ -1,4 +1,4 @@
-var eventNotify = {
+var taskNotify = {
     run: function() {
 
         var message = 'Game report of room '+Game.spawns['Spawn1'].room.name+'\n';
@@ -36,11 +36,9 @@ var eventNotify = {
         Game.spawns['Spawn1'].memory.death = 0;
         Game.spawns['Spawn1'].memory.assign = 0;
 
-        message += 'isit working?';
-
         console.log(message);
         Game.notify(message);
 	}
 };
 
-module.exports = eventNotify;
+module.exports = taskNotify;
