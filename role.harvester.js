@@ -8,7 +8,7 @@ var roleHarvester = {
             });
             for(var index in containers) {
                 if(Game.getObjectById(containers[index].memory.host) == null) {
-                    target = containers[index].pos.findClosestByRange(FIND_SOURCE);
+                    target = containers[index].pos.findClosestByRange(FIND_SOURCES);
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'arrive';
                     break;
