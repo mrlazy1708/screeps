@@ -19,7 +19,7 @@ var roleHarvester = {
 
         if(creep.state == 'arrive') {
             const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID));
-            console.log(path);
+            console.log(path+'fdsijfjd');
             if(path.length > 0) {
                 creep.move(path[0].direction);
             }
