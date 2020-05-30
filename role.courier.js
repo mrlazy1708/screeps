@@ -17,7 +17,7 @@ var roleCourier = {
                 var host = null, maxv = 0;
                 for(var index in containers) {
                     if(containers[index].store[RESOURCE_ENERGY] - containers[index].memory.reserved > maxv) {
-                        host = conatiners[index];
+                        host = containers[index];
                         maxv = host.store[RESOURCE_ENERGY] - host.memory.reserved;
                     }
                 }
