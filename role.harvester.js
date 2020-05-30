@@ -7,8 +7,9 @@ var roleHarvester = {
                 filter: {structureType: STRUCTURE_CONTAINER}
             });
             for(var index in containers) {
-                if(Game.getObjectById(containers[index].memory.host) == null) {
+                if(Game.getObjectById(containers[index].memory.hostID) == null) {
                     target = containers[index].pos.findClosestByRange(FIND_SOURCES);
+                    containers[index].memory.hostID = creep.id;
                     creep.memory.containerID = containers[index].id;
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'arrive';
