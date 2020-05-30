@@ -29,23 +29,17 @@ var roleHarvester = {
         }
         
         if(creep.memory.state == 'work') {
-            if(creep.store.getFreeCapacity() > 0) {
-                if(!target) {
-                    creep.memory.state = 'idle';
-                }
-                else {
-                    if( creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
-                        creep.say('🎯');
-                    }
-                    else {
-                        creep.say('🚨️️');
-                    }
-                }
+            if(!target) {
+                creep.memory.state = 'idle';
             }
             else {
-                creep.say('🍺');
-                creep.drop(RESOURCE_ENERGY);
+                if( creep.harvest(target) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.say('🎯');
+                }
+                else {
+                    creep.say('🚨️️');
+                }
             }
         }
     }
