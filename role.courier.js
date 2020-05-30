@@ -4,8 +4,6 @@ var roleCourier = {
         if(target == null) {
             creep.memory.state = 'idle';
         }
-        
-creep.memory.state = 'idle';
 
         if(creep.memory.state == 'idle') {
             creep.say('💤');
@@ -16,7 +14,6 @@ creep.memory.state = 'idle';
                 var containers = creep.room.find(FIND_STRUCTURES, {
                     filter: {structureType: STRUCTURE_CONTAINER}
                 });
-                console.log(containers);
                 var host = null, maxv = 0;
                 for(var index in containers) {
                     if(containers[index].store[RESOURCE_ENERGY] - containers[index].memory.reserved > maxv) {
