@@ -46,7 +46,7 @@ var taskUpgrade = {
         
         if(!Game.spawns['Spawn1'].spawning) {
             if(nHarvester < 2 && nFreeCourier >= 1 ) {
-                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
+                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
             }
             else if(nFreeCourier < 1) {
                 Game.spawns['Spawn1'].spawnCreep( [CARRY, CARRY, MOVE, MOVE], 'Courier_'+Game.time, { memory: { role: 'courier', state: 'idle', reserved: 0 } } );
