@@ -11,21 +11,15 @@ var roleCourier = {
                 creep.memory.state = 'carry';
             }
             else {
-                var containers = creep.room.find(FIND_STRUCTURES, {
-                    filter: {structureType: STRUCTURE_CONTAINER}
-                });
-                var host = null, maxv = 0;
-                for(var index in containers) {
-                    if(containers[index].store[RESOURCE_ENERGY] - containers[index].memory.reserved > maxv) {
-                        host = containers[index];
-                        maxv = host.store[RESOURCE_ENERGY] - host.memory.reserved;
+                target = creep.room.findClosestByPath(FIND_STRUCTURES, {
+                    filter: function(object) {
+                        return object.structureType == STRUCTURE_CONTAINER && object.store[RESOURCE_ENERGY] - object.memory.reserved > 0;
                     }
-                }
-                if(host != null) {
+                });
+                if(target != null) {
                     host.memory.reserved += creep.store.getFreeCapacity();
                     creep.memory.reserved = creep.store.getFreeCapacity();
-                    target = host;
-                    creep.memory.targetID = host.id;
+                    creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
                     Game.spawns['Spawn1'].memory.assign++;
                     console.log('creep #'+creep.id+' will fetch '+creep.memory.reserved+' energy from creep #'+host.id);
