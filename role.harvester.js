@@ -1,6 +1,6 @@
 var roleHarvester = {
     run: function(creep) {
-
+        var target = Game.getObjectById(creep.memory.targetID);
         if(creep.memory.state == 'idle') {
             creep.say('💤');
             var containers = creep.room.find(FIND_STRUCTURES, {
@@ -8,16 +8,26 @@ var roleHarvester = {
             });
             for(var index in containers) {
                 if(Game.getObjectById(containers[index].memory.host) == null) {
-                    creep.memory.targetID = containers[index].pos.findClosestByRange(FIND_SOURCE).id;
-                    creep.memory.state = 'work';
+                    target = containers[index].pos.findClosestByRange(FIND_SOURCE);
+                    creep.memory.targetID = target.id;
+                    creep.memory.state = 'arrive';
                     break;
                 }
+            }
+        }
+
+        if(creep.state == 'arrive') {
+            const path = creep.pos.findPathTo(target);
+            if(path.length > =0) {
+                creep.move(path[0].direction);
+            }
+            else {
+                creep.state = 'work';
             }
         }
         
         if(creep.memory.state == 'work') {
             if(creep.store.getFreeCapacity() > 0) {
-                var target = Game.getObjectById(creep.memory.targetID);
                 if(!target) {
                     creep.memory.state = 'idle';
                 }
