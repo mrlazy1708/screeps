@@ -77,7 +77,7 @@ var roleCourier = {
                         if(host == null) {
                             host = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                                 filter: function(object) {
-                                    return object.structureType == STRUCTURE_TOWER && object.store.getFreeCapacity() - object.memory.reserved > object.store.getCapacity()/2;
+                                    return object.structureType == STRUCTURE_TOWER /*&& object.store.getFreeCapacity() - object.memory.reserved > object.store.getCapacity()/2*/;
                                 }
                             });
                         }
