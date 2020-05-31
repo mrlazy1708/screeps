@@ -45,6 +45,7 @@ var taskUpgrade = {
         roleSpawn.run(Game.spawns['Spawn1']);
 
         if(!Game.spawns['Spawn1'].spawning) {
+            console.log(nFreeCourier);
             if(nHarvester < 2 && nFreeCourier >= 1 ) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
             }
