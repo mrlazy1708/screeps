@@ -14,7 +14,7 @@ module.exports.loop = function () {
 		if(enemys.length) {
 			if(!room.memory.attack) {
 				room.memory.attack = true;
-				Memory.message += Game.time+': '+enemys.length+' creep '+(enemys.length==1?'':'s')+' of '+enemys[0].owner.username+(enemys.length==1?' was':' were')+' spotted in '+room.name+'\n';
+				Memory.message += Game.time+': '+enemys.length+' creep'+(enemys.length==1?'':'s')+' of '+enemys[0].owner.username+(enemys.length==1?' was':' were')+' spotted in '+room.name+'\n';
 				console.log('Under attack!');
 			}
 			taskDefense.run(enemys);
@@ -27,7 +27,7 @@ module.exports.loop = function () {
 			taskUpgrade.run();
 		}
 
-		var towers = _.filter(Game.structure, { structureType: STRUCTURE_TOWER });
+		var towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
 	    for(var index in towers) {
 	    	roleTower.run(towers[index]);
 	    }
