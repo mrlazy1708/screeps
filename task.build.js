@@ -5,7 +5,7 @@ var roleSpawn = require('role.spawn');
 
 var taskBuild = {
     run: function() {
-        var nFreeCourier = 0, nHarvester = 0, nWorker = 0;
+        var nFreeCourier = 0, nCourier = 0, nHarvester = 0, nWorker = 0;
         
         for(var name in Memory.creeps) {
             var creep = Game.creeps[name];
@@ -29,6 +29,7 @@ var taskBuild = {
                 if(creep.memory.state != 'get' && creep.memory.state != 'give') {
                     nFreeCourier++;
                 }
+                nCourier++;
             }
 
             if(creep.memory.role == 'harvester') {
@@ -45,7 +46,7 @@ var taskBuild = {
         roleSpawn.run(Game.spawns['Spawn1']);
         
         if(!Game.spawns['Spawn1'].spawning) {
-            if(nHarvester < 2 && nFreeCourier >= 1 ) {
+            if(nHarvester < 2 && nCourier >= 1) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
             }
             else if(nFreeCourier < 1) {
