@@ -15,7 +15,7 @@ module.exports.loop = function () {
         }
     });
     for(var index in newExtensions) {
-    	newExtensions[index].memory.reserved = 0;\
+    	newExtensions[index].memory.reserved = 0;
     }
 
 	var enemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
