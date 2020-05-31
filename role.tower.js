@@ -14,7 +14,7 @@ var roleTower = {
         else {
             tower.memory.state = 'fill';
         }
-
+console.log(131231);
         if(tower.store[RESOURCE_ENERGY] >= 10) {
             var enemys = tower.room.find(FIND_HOSTILE_CREEPS);
             console.log(enemys);
