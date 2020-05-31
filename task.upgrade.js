@@ -26,7 +26,7 @@ var taskUpgrade = {
 
             if(creep.memory.role == 'courier') {
                 roleCourier.run(creep);
-                if(creep.memory.state != 'get' && creep.memory.state == 'give') {
+                if(creep.memory.state != 'get' && creep.memory.state != 'give') {
                     nFreeCourier++;
                 }
             }
