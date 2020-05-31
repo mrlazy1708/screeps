@@ -1,5 +1,5 @@
 var taskNotify = {
-    run: function(enemys) {
+    run: function() {
 
         var message = 'Game report at time '+Game.time+':\n';
 
