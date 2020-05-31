@@ -1,36 +1,39 @@
 var taskNotify = {
     run: function(enemys) {
 
-        var message = 'Game report of room '+Game.spawns['Spawn1'].room.name+'\n';
+        var message = 'Game report at time '+Game.time+':\n';
 
-        message += 'Time: '+Game.time+'\n';
-
-        message += 'CPU usage: '+Game.cpu.getUsed().toFixed(2)+'/'+Game.cpu.limit+'\n';
+        message += 'CPU\t: ['+Memory.CPU_min.toFixed(2)+', '+(Memory.CPU_sum/300.0).toFixed(2)+', '+Memory.CPU_max.toFixed(2)+']\n';
 
         var creeps;
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'harvester');
-        message += 'Creeps: harvester: '+creeps.length+'\n';
+        message += 'Creeps\t: Harvester\t: '+creeps.length+'\n';
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'worker');
-        message += '        worker: '+creeps.length+'\n';
+        message += '      \t  Worker\t: '+creeps.length+'\n';
 
         creeps = _.filter(Game.creeps, object => object.memory.role == 'courier');
-        message += '        courier: '+creeps.length+'\n';
+        message += '      \t  Courier\t: '+creeps.length+'\n';
 
-        creeps = _.filter(Game.creeps, object => object.memory.role == 'tramp');
-        message += '        tramp: '+creeps.length+'\n';
-
-        message += 'Death during last period: '+Game.spawns['Spawn1'].memory.death+'\n';
+        message += 'Death\t: '+Memory.nDeath+'\n';
         
-        message += 'Assignments during last period: '+Game.spawns['Spawn1'].memory.assign+'\n';
+        message += 'Task\t: '+Memory.nTask+'\n';
         
-        message += 'Room controller: level: '+Game.spawns['Spawn1'].room.controller.level+', progress: '+Game.spawns['Spawn1'].room.controller.progress+'/'+Game.spawns['Spawn1'].room.controller.progressTotal+'\n';
+        var fLine = true;
+        for(var name in Game.rooms) {
+            var rc = Game.rooms[name].controller;
+            message += (fLine?'Rooms\t: ':'     \t: ')+name+'\t: '+rc.level+' + '+rc.progress+'/'+rc.progressTotal+', '+rc.hits+'/'+rc.hitsMax+'\n';
+            fLine = false;
+        }
 
         message += Memory.message;
 
-        Game.spawns['Spawn1'].memory.death = 0;
-        Game.spawns['Spawn1'].memory.assign = 0;
+        Memory.CPU_min = 20.0;
+        Memory.CPU_sum = 0.0;
+        Memory.CPU_max = 0.0;
+        Memory.nDeath = 0;
+        Memory.nTask = 0;
         Memory.message = '';
 
         console.log(message);
