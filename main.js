@@ -21,8 +21,13 @@ module.exports.loop = function () {
 	if(enemys.length) {
 		console.log('Under attack!');
 		taskDefense.run(enemys);
+		if(!Game.spawns['Spawn1'].memory.attack) {
+			Game.spawns['Spawn1'].memory.attack = true;
+			Memory.message += Game.time+': '+enemys.length+' creep'+(enemys.length==1?'':'s')+'owned by '+enemys[0].owner+(enemys.length==1?' was':' were')+' spotted in room '+Game.spawns['Spawn1'].room.name+'\n';
+		}
 	}
 	else {
+		Game.spawns['Spawn1'].memory.attack = false;
 		var constructionSites = Game.spawns['Spawn1'].room.find(FIND_CONSTRUCTION_SITES);
 		if(constructionSites.length) {
 			console.log('task: build');
