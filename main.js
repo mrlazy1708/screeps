@@ -25,7 +25,7 @@ module.exports.loop = function () {
 		taskDefense.run(enemys);
 		if(!Game.spawns['Spawn1'].memory.attack) {
 			Game.spawns['Spawn1'].memory.attack = true;
-			Memory.message += Game.time+': '+enemys.length+' creep'+(enemys.length==1?'':'s')+'owned by '+enemys[0].owner+(enemys.length==1?' was':' were')+' spotted in room '+Game.spawns['Spawn1'].room.name+'\n';
+			Memory.message += Game.time+': '+enemys.length+' creep '+(enemys.length==1?'':'s')+' owned by '+enemys[0].owner.name+(enemys.length==1?' was':' were')+' spotted in '+Game.spawns['Spawn1'].room.name+'\n';
 		}
 	}
 	else {
