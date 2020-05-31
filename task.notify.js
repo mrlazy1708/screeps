@@ -18,9 +18,6 @@ var taskNotify = {
         creeps = _.filter(Game.creeps, object => object.memory.role == 'courier');
         message += '        courier: '+creeps.length+'\n';
 
-        creeps = _.filter(Game.creeps, object => object.memory.role == 'stocker');
-        message += '        stocker: '+creeps.length+'\n';
-
         creeps = _.filter(Game.creeps, object => object.memory.role == 'tramp');
         message += '        tramp: '+creeps.length+'\n';
 
