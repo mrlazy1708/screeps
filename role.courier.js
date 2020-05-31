@@ -97,6 +97,7 @@ var roleCourier = {
                                     return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
                                 }
                             });
+                            console.log(target);
                         }
                     }
                 }
