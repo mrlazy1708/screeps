@@ -86,17 +86,24 @@ var roleCourier = {
                         }
                     });
                     if(target == null) {
-                        target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                        target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                             filter: function(object) {
-                                return object.memory.role == 'worker' && object.store[RESOURCE_ENERGY] + object.memory.reserved < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*4;
+                                return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
                             }
                         });
                         if(target == null) {
-                            target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                            target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                                 filter: function(object) {
-                                    return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
+                                    return object.memory.role == 'worker' && object.store[RESOURCE_ENERGY] + object.memory.reserved < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*4;
                                 }
                             });
+                            if(target == null) {
+                                target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                                    filter: function(object) {
+                                        return object.structureType == STRUCTURE_TOWER && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
+                                    }
+                                });                                
+                            }
                         }
                     }
                 }
