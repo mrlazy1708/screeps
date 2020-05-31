@@ -24,7 +24,7 @@ var roleCourier = {
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
                     Game.spawns['Spawn1'].memory.assign++;
-                    console.log('creep #'+creep.id+' will fetch '+creep.memory.reserved+' energy from container #'+target.id);
+                    console.log('#'+creep.id+' will fetch '+creep.memory.reserved+' energy from #'+target.id);
                 }
             }
         }
@@ -76,39 +76,37 @@ var roleCourier = {
                 creep.memory.state = 'idle';
             }
             else {
-                var host;
                 if(Game.spawns['Spawn1'].store.getFreeCapacity(RESOURCE_ENERGY) - Game.spawns['Spawn1'].memory.reserved > 0) {
-                    host = Game.spawns['Spawn1'];
+                    target = Game.spawns['Spawn1'];
                 }
                 else {
-                    host = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                         filter: (object) => { 
                             return object.structureType == STRUCTURE_EXTENSION && object.energy + object.memory.reserved < object.energyCapacity;
                         }
                     });
-                    if(host == null) {
-                        host = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                    if(target == null) {
+                        target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                             filter: function(object) {
                                 return object.memory.role == 'worker' && object.store[RESOURCE_ENERGY] + object.memory.reserved < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*4;
                             }
                         });
-                        if(host == null) {
-                            host = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                        if(target == null) {
+                            target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                                 filter: function(object) {
-                                    return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill';
+                                    return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.reserved > 0;
                                 }
                             });
                         }
                     }
                 }
-                if(host != null) {
-                    host.memory.reserved += creep.store[RESOURCE_ENERGY];
+                if(target != null) {
+                    target.memory.reserved += creep.store[RESOURCE_ENERGY];
                     creep.memory.reserved = creep.store[RESOURCE_ENERGY];
-                    target = host;
-                    creep.memory.targetID = host.id;
+                    creep.memory.targetID = target.id;
                     creep.memory.state = 'give';
                     Game.spawns['Spawn1'].memory.assign++;
-                    console.log('creep #'+creep.id+' will deliver '+creep.memory.reserved+' energy to creep #'+host.id);
+                    console.log('#'+creep.id+' will deliver '+creep.memory.reserved+' energy to #'+target.id);
                 }
             }
         }
