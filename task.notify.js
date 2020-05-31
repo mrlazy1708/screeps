@@ -23,7 +23,7 @@ var taskNotify = {
         var fLine = true;
         for(var name in Game.rooms) {
             var rc = Game.rooms[name].controller;
-            message += (fLine?'Rooms\t: ':'     \t: ')+name+'\t: '+rc.level+' + '+(rc.level < 8?rc.progress+'/'+rc.progressTotal:rc.hits+'/'+rc.hitsMax)+'\n';
+            message += (fLine?'Rooms\t: ':'     \t: ')+name+'\t: '+rc.level+(rc.level < 8?' + '+rc.progress+'/'+rc.progressTotal:' , '+rc.hits+'/'+rc.hitsMax)+'\n';
             fLine = false;
         }
 
