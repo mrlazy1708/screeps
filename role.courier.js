@@ -12,7 +12,7 @@ var roleCourier = {
             else {
                 target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: function(object) {
-                        return object.structureType == STRUCTURE_CONTAINER && object.store[RESOURCE_ENERGY] - object.memory.reserved > 0;
+                        return object.structureType == STRUCTURE_CONTAINER && object.memory.reserved - object.store[RESOURCE_ENERGY] < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*10;
                     }
                 });
                 if(target == null) {
