@@ -2,8 +2,10 @@ var roleHarvester = {
     run: function(creep) {
         var target = Game.getObjectById(creep.memory.targetID);
         if(creep.memory.state == 'idle') {
-            var freeContainers = creep.room.find(FIND_STRUCTURES, filter: function(object){
-                return object.structureType == STRUCTURE_CONTAINER && Game.getObjectById(object.memory.hostID) == null;
+            var freeContainers = creep.room.find(FIND_STRUCTURES, {
+                filter: function(object){
+                    return object.structureType == STRUCTURE_CONTAINER && Game.getObjectById(object.memory.hostID) == null;
+                }
             });
             if(freeContainers.length > 0) {
                 target = freeContainers[0].pos.findClosestByRange(FIND_SOURCES);
