@@ -53,7 +53,7 @@ var taskUpgrade = {
 
         if(!Game.spawns['Spawn1'].spawning) {
             if(nClaimer < 1) {
-            Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, MOVE], 'Claimer_'+Game.time, { memory: { role: 'claimer', state: 'h', reserved: 0 } } );                
+                Game.spawns['Spawn1'].spawnCreep( [WORK, CARRY, MOVE], 'Claimer_'+Game.time, { memory: { role: 'claimer', state: 'h', reserved: 0 } } );                
             }
             else if(nHarvester < 2 && nCourier >= 1) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
@@ -63,7 +63,6 @@ var taskUpgrade = {
             }
             else if(nWorker < 4) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
-            }
             }
         }
 
