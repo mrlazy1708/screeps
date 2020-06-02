@@ -26,12 +26,12 @@ module.exports.loop = function () {
 			}
 			taskUpgrade.run();
 		}
-
-		var towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
-	    for(var index in towers) {
-	    	roleTower.run(towers[index]);
-	    }
 	}
+	
+	var towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
+    for(var index in towers) {
+    	roleTower.run(towers[index]);
+    }
 
     var CPU_used = Game.cpu.getUsed();
     Memory.CPU_sum += CPU_used;
