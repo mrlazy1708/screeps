@@ -1,3 +1,4 @@
+var roleClaimer = require('role.claimer');
 var roleCourier = require('role.courier');
 var roleHarvester = require('role.harvester');
 var roleSpawn = require('role.spawn');
@@ -40,6 +41,10 @@ var taskUpgrade = {
             if(creep.memory.role == 'worker') {
                 roleUpgrader.run(creep);
                 nWorker++;
+            }
+
+            if(creep.memory.role == 'claimer') {
+                roleClaimer.run(creep);
             }
         }
         
