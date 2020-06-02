@@ -1,3 +1,15 @@
+function text(val) {
+    if(val < 1000) {
+        return (val / 1.0).toFixed(1);
+    }
+    else if(val < 1000000){
+        return (val / 1000.0).toFixed(1)+'K';
+    }
+    else {
+        return (val / 1000000.0).toFixed(1)+'M';
+    }
+}
+
 var taskNotify = {
     run: function(enemys) {
 
@@ -23,7 +35,8 @@ var taskNotify = {
         var fLine = true;
         for(var name in Game.rooms) {
             var rc = Game.rooms[name].controller;
-            message += (fLine?'Rooms\t: ':'     \t: ')+name+'\t: '+rc.level+(rc.level < 8?' + '+(rc.progress/1000.0).toFixed(2)+'K/'+(rc.progressTotal/1000.0).toFixed(2):' , '+rc.hits+'/'+rc.hitsMax)+'\n';
+
+            message += (fLine?'Rooms\t: ':'     \t: ')+name+'\t: '+rc.level+(rc.level < 8?' + '+text(rc.progress)+'/'+text(rc.progressTotal):' , '+rc.hits+'/'+rc.hitsMax)+'\n';
             fLine = false;
         }
 
