@@ -36,7 +36,7 @@ module.exports.loop = function () {
 		taskUpgrade.run();
 	}
 
-	var towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
+	var towers = _.filter(Game.structure, { structureType: STRUCTURE_TOWER });
     for(var index in towers) {
     	roleTower.run(towers[index]);
     }
