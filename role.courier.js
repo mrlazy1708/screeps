@@ -49,7 +49,7 @@ var roleCourier = {
                         creep.say('📥');
                     }
                     else if(ERR == ERR_NOT_ENOUGH_RESOURCES) {
-                        creep.state = 'idle';
+                        creep.memory.state = 'idle';
                         creep.say('💤');
                     }
                     else {
