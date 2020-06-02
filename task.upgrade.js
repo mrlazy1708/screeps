@@ -21,7 +21,7 @@ var taskUpgrade = {
                     }
                 }
                 delete Memory.creeps[name];
-                Game.spawns['Spawn1'].memory.death++;
+                Memory.nDeath++;
                 continue;
             }
 
