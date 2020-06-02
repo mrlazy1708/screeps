@@ -1,9 +1,9 @@
+var roleBuilder = require('role.builder');
 var roleCourier = require('role.courier');
 var roleHarvester = require('role.harvester');
 var roleSpawn = require('role.spawn');
-var roleUpgrader = require('role.upgrader');
 
-var taskUpgrade = {
+var taskBuild = {
     run: function() {
         var nFreeCourier = 0, nCourier = 0, nHarvester = 0, nWorker = 0;
         
@@ -23,7 +23,7 @@ var taskUpgrade = {
                 Game.spawns['Spawn1'].memory.death++;
                 continue;
             }
-
+            
             if(creep.memory.role == 'courier') {
                 roleCourier.run(creep);
                 if(creep.memory.state != 'get' && creep.memory.state != 'give') {
@@ -38,13 +38,13 @@ var taskUpgrade = {
             }
             
             if(creep.memory.role == 'worker') {
-                roleUpgrader.run(creep);
+                roleBuilder.run(creep);
                 nWorker++;
             }
         }
         
         roleSpawn.run(Game.spawns['Spawn1']);
-
+        
         if(!Game.spawns['Spawn1'].spawning) {
             if(nHarvester < 2 && nCourier >= 1) {
                 Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, { memory: { role: 'harvester', state: 'idle', reserved: 0 } } );
@@ -52,12 +52,12 @@ var taskUpgrade = {
             else if(nFreeCourier < 1) {
                 Game.spawns['Spawn1'].spawnCreep( [CARRY, CARRY, MOVE, MOVE], 'Courier_'+Game.time, { memory: { role: 'courier', state: 'idle', reserved: 0 } } );
             }
-            else if(nWorker < 4) {
-                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
+            else if(nWorker < 3) {
+                Game.spawns['Spawn1'].spawnCreep( [WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], 'Worker_'+Game.time, { memory: { role: 'worker', state: 'idle', reserved: 0 } } );
             }
         }
 
 	}
 };
 
-module.exports = taskUpgrade;
+module.exports = taskBuild;

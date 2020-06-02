@@ -12,7 +12,7 @@ var roleCourier = {
             else {
                 target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     filter: function(object) {
-                        return object.structureType == STRUCTURE_CONTAINER && object.memory.reserved - object.store[RESOURCE_ENERGY] < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*10;
+                        return object.structureType == STRUCTURE_CONTAINER && object.store[RESOURCE_ENERGY] - object.memory.reserved > 0;
                     }
                 });
                 if(target == null) {
@@ -23,7 +23,7 @@ var roleCourier = {
                     creep.memory.reserved = creep.store.getFreeCapacity();
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
-                    Memory.nTask++;
+                    Game.spawns['Spawn1'].memory.assign++;
                     console.log('#'+creep.id+' will fetch '+creep.memory.reserved+' energy from #'+target.id);
                 }
             }
@@ -60,9 +60,9 @@ var roleCourier = {
         }
 
         if(creep.memory.state == 'flee->carry') {
-            let path = PathFinder.search(creep.pos, { pos: target.pos, range: 3 }, { flee: true }).path;
+            let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
             if(path.length > 0 && 0) {
-                creep.move(path[0].direction);
+                creep.moveByPath(path);
                 creep.say('⏏️');
             }
             else {
@@ -112,7 +112,7 @@ var roleCourier = {
                     creep.memory.reserved = creep.store[RESOURCE_ENERGY];
                     creep.memory.targetID = target.id;
                     creep.memory.state = 'give';
-                    Memory.nTask++;
+                    Game.spawns['Spawn1'].memory.assign++;
                     console.log('#'+creep.id+' will deliver '+creep.memory.reserved+' energy to #'+target.id);
                 }
             }
