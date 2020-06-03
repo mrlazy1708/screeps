@@ -18,13 +18,13 @@ const roleJack = {
                 creep.memory.state = 'get';
             }
             else {
-                var target = creep.room.findClosestByPath(FIND_MY_SPAWNS, {
+                var target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
                     filter: function(object) {
                         return object.store.getFreeCapacity(RESOURCE_ENERGY) != 0;
                     }
                 });
                 if(target == null) {
-                    target = creep.room.findClosestByPath(FIND_STRUCTURES, {
+                    target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                         filter: function(object) {
                             return object.structureType == STRUCTURE_EXTENSION && object.store.getFreeCapacity(RESOURCE_ENERGY) != 0;
                         }
