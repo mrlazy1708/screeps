@@ -31,9 +31,9 @@ const roleJack = {
                     });
                 }
                 if(target != null) {
+                    console.log(creep.transfer(target, RESOURCE_ENERGY));
                   if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(target);
-                        console.log(target+target.pos);
                     }
                 }
             }
