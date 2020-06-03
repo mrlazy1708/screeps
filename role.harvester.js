@@ -1,45 +1,63 @@
-var roleHarvester = {
+const roleHarvester = {
     run: function(creep) {
-        var target = Game.getObjectById(creep.memory.targetID);
+
         if(creep.memory.state == 'idle') {
-            creep.say('💤');
-            var containers = creep.room.find(FIND_STRUCTURES, {
-                filter: {structureType: STRUCTURE_CONTAINER}
+            let freeContainer = creep.room.findClosestByPath(FIND_STRUCTURES, {
+                filter: function(object) {
+                    object.structureType == STRUCTURE_CONTAINER && Game.getObjectById(object.memory.hostID) == null;
+                }
             });
-            for(var index in containers) {
-                if(Game.getObjectById(containers[index].memory.hostID) == null) {
-                    target = containers[index].pos.findClosestByRange(FIND_SOURCES);
-                    containers[index].memory.hostID = creep.id;
-                    creep.memory.containerID = containers[index].id;
-                    creep.memory.targetID = target.id;
+            if(freeContainer != null) {
+                let source = freeContainer.pos.findClosestByRange(FIND_SOURCES);
+                freeContainer.memory.hostID = creep.id;
+                creep.memory.targetID = freeContainer.id;
+                creep.memory.sourceID = source.id;
+                creep.memory.state = 'arrive';
+            }
+            else {
+                let freeFlag = creep.room.findClosestByPath(FIND_FLAGS, {
+                    filter: function(object) {
+                        object.memory.type = 'harvestNavi' && Game.getObjectById(object.memory.hostID) == null;
+                    }
+                });
+                if(freeFlag != null) {
+                    let source = freeFlag.pos.findClosestByRange(FIND_SOURCES);
+                    freeFlag.memory.hostID = creep.id;
+                    creep.memory.targetID = freeFlag.id;
+                    creep.memory.sourceID = source.id;
                     creep.memory.state = 'arrive';
-                    break;
+                }
+                else {
+                    creep.say('💤');
                 }
             }
         }
 
         if(creep.memory.state == 'arrive') {
-            const path = creep.pos.findPathTo(Game.getObjectById(creep.memory.containerID));
-            if(path.length > 0) {
-                creep.say('🎯');
-                creep.move(path[0].direction);
+            let target = Game.getObjectById(creep.memory.targetID);
+            if(target != null) {
+                const path = PathFinder.search(creep.pos, target.pos).path;
+                if(path.length > 0) {
+                    creep.move(path[0].direction);
+                    creep.say('🎯');
+                }
+                else {
+                    creep.memory.state = 'work';
+                }
             }
             else {
-                creep.memory.state = 'work';
+                creep.memory.state = 'idle';
+                creep.say('💤');
             }
         }
         
         if(creep.memory.state == 'work') {
-            if(!target) {
-                creep.memory.state = 'idle';
+            if(creep.harvest(Game.getObjectById(creep.memory.sourceID)) != ERR_NOT_IN_RANGE) {
+                creep.say('🚨️️');
             }
             else {
-                if(creep.harvest(target) == ERR_NOT_IN_RANGE) {
-                    creep.memory.state = 'arrive';
-                }
-                else {
-                    creep.say('🚨️️');
-                }
+                creep.memory.state = 'arrive';
+                creep.say('🎯');
             }
         }
     }

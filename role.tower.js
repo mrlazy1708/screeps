@@ -1,4 +1,4 @@
-var roleTower = {
+const roleTower = {
     run: function(tower) {
         
         if(tower.memory.state == 'fill') {
@@ -16,12 +16,12 @@ var roleTower = {
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {
-            var enemys = tower.room.find(FIND_HOSTILE_CREEPS);
+            const enemys = tower.room.find(FIND_HOSTILE_CREEPS);
             if(enemys.length) {
                 tower.attack(enemys[0]);
             }
             else {
-                var injured = tower.pos.findClosestByRange(FIND_MY_CREEPS, {
+                const injured = tower.pos.findClosestByRange(FIND_MY_CREEPS, {
                     filter: function(object) {
                         return object.hitsMax - object.hits > 0;
                     }
@@ -30,18 +30,18 @@ var roleTower = {
                     tower.heal(injured);
                 }
                 else {
-                    var target = tower.pos.findClosestByRange(FIND_STRUCTURES, {
+                    const damaged = tower.pos.findClosestByRange(FIND_STRUCTURES, {
                         filter: function(object) {
                             return object.hitsMax - object.hits >= 10 && object.structureType != STRUCTURE_WALL;
                         }
                     });
-                    if(target) {
-                        tower.repair(target);
+                    if(damaged) {
+                        tower.repair(damaged);
                     }
                 }
             }
         }
-	}
+    }
 };
 
 module.exports = roleTower;

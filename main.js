@@ -1,52 +1,58 @@
-var roleTower = require('role.tower');
-var taskBuild = require('task.build');
-var taskDefense = require('task.defense');
-var taskInit = require('task.init');
-var taskNotify = require('task.notify');
-var taskUpgrade = require('task.upgrade');
+const roleTower = require('role.tower');
+const taskCreep = require('task.creep');
+const taskExamine = require('task.examine');
+const taskInit = require('task.init');
+const taskNotify = require('task.notify');
 
 module.exports.loop = function () {
 
 	taskInit.run();
 
-	var newExtensions = Game.spawns['Spawn1'].room.find(FIND_MY_STRUCTURES, {
-        filter: function(object) {
-        	return object.structureType == STRUCTURE_EXTENSION && object.memory.reserved == undefined;
-        }
-    });
-    for(var index in newExtensions) {
-    	newExtensions[index].memory.reserved = 0;
-    	console.log('extension #'+newExtensions[index].id+' is built');
-    }
-
-	var enemys = Game.spawns['Spawn1'].room.find(FIND_HOSTILE_CREEPS);
-	if(enemys.length) {
-		taskDefense.run(enemys);
-		if(!Game.spawns['Spawn1'].memory.attack) {
-			Game.spawns['Spawn1'].memory.attack = true;
-			Memory.message += Game.time+': '+enemys.length+' creep '+(enemys.length==1?'':'s')+' of '+enemys[0].owner.username+(enemys.length==1?' was':' were')+' spotted in '+Game.spawns['Spawn1'].room.name+'\n';
-			console.log('Under attack!');
+	for(let name in Game.rooms) {
+		let room = Game.rooms[name];
+		const enemys = room.find(FIND_HOSTILE_CREEPS);
+		if(enemys.length) {
+			if(!room.memory.invaded) {
+				room.memory.invaded = true;
+				Memory.message += Game.time+': '+enemys.length+' creep '+(enemys.length==1?'':'s')+' of '+enemys[0].owner.username+' found in '+room.name+'\n';
+				console.log('Room '+room.name+'is under attack!');
+			}
+			enemys.forEach(function(object) {
+				let victims = object.pos.findInRange(FIND_MY_CREEPS, 5, {
+					filter: function(object) {
+						return object.painc != Game.time;
+					}
+				});
+				victims.forEach(function(creep) {
+					const path = PathFinder.search(creep.pos, enemys.map(object=>{return{pos: object.pos, range: 5}}), {flee: true}).path;
+					creep.move(path[0].direction);
+					creep.memory.panic = Game.time;
+					creep.say('🐥');
+				});
+			});
+		}
+		else {
+			if(room.memory.invaded) {
+				room.memory.invaded = false;
+				taskExamine.run(room);
+				console.log('Enemys slayed in room '+room.name+' !');
+			}
 		}
 	}
-	else {
-		if(Game.spawns['Spawn1'].memory.attack) {
-			Game.spawns['Spawn1'].memory.attack = false;
-			console.log('Enemy slayed!');
-		}
-		taskUpgrade.run();
-	}
 
-	var towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
-    for(var index in towers) {
+	taskCreep.run();
+
+	const towers = _.filter(Game.structures, { structureType: STRUCTURE_TOWER });
+    for(let index in towers) {
     	roleTower.run(towers[index]);
     }
 
-    var CPU_used = Game.cpu.getUsed();
+    const CPU_used = Game.cpu.getUsed();
     Memory.CPU_sum += CPU_used;
     Memory.CPU_min = Math.min(Memory.CPU_min, CPU_used);
     Memory.CPU_max = Math.max(Memory.CPU_max, CPU_used);
 
     if(Game.time % 300 == 0) {
-        taskNotify.run(enemys);
+        taskNotify.run();
     }
 }

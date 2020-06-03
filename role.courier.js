@@ -1,162 +1,188 @@
-var roleCourier = {
+const roleCourier = {
     run: function(creep) {
-        var target = Game.getObjectById(creep.memory.targetID);
-        if(target == null) {
-            creep.memory.state = 'idle';
-        }
 
         if(creep.memory.state == 'idle') {
-            if(creep.store.getFreeCapacity() == 0) {
-                creep.memory.state = 'carry';
+            let target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: function(object) {
+                    return object.structureType == STRUCTURE_CONTAINER && object.memory.reserved - object.store[RESOURCE_ENERGY] < creep.pos.getRangeTo(object.pos)*10;
+                }
+            });
+            if(target != null) {
+                target.memory.reserved += creep.store.getFreeCapacity();
+                creep.memory.reserved = creep.store.getFreeCapacity();
+                creep.memory.targetID = target.id;
+                creep.memory.state = 'way-get';
+                Memory.nTask++;
+                console.log('#'+creep.id+' will fetch '+creep.memory.reserved+' energy from #'+target.id);
             }
             else {
-                target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: function(object) {
-                        return object.structureType == STRUCTURE_CONTAINER && object.memory.reserved - object.store[RESOURCE_ENERGY] < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*10;
-                    }
-                });
-                if(target == null) {
-                    creep.say('💤');
+                creep.say('💤');
+            }
+        }
+
+        if(creep.memory.state == 'way-get') {
+            let target = Game.getObjectById(creep.memory.targetID);
+            if(target != null) {
+                const path = PathFinder.search(creep.pos, target.pos).path;
+                if(path.length > 1) {
+                    creep.move(path[0].direction);
+                    new RoomVisual(creep.room.name).poly(path, {stroke: '#66ccff', lineStyle: 'dashed'}); 
+                    creep.say('📥');
                 }
                 else {
-                    target.memory.reserved += creep.store.getFreeCapacity();
-                    creep.memory.reserved = creep.store.getFreeCapacity();
-                    creep.memory.targetID = target.id;
                     creep.memory.state = 'get';
-                    Memory.nTask++;
-                    console.log('#'+creep.id+' will fetch '+creep.memory.reserved+' energy from #'+target.id);
                 }
+            }
+            else {
+                creep.memory.state = 'idle';
+                creep.say('💤');
             }
         }
         
         if(creep.memory.state == 'get') {
-            if(target == null) {
-                creep.memory.state = 'idle';
-                creep.say('💤');
-            }
-            else {
-                if(creep.store.getFreeCapacity() == 0){
-                    target.memory.reserved -= creep.memory.reserved;
-                    creep.memory.reserved = 0;
-                    creep.memory.state = 'flee->carry';
-                }
-                else {
-                    var ERR = creep.withdraw(target, RESOURCE_ENERGY);
-                    target.memory.reserved -= creep.memory.reserved - creep.store.getFreeCapacity();
-                    creep.memory.reserved = creep.store.getFreeCapacity();
-                    if(ERR == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
-                        creep.say('📥');
-                    }
-                    else if(ERR == ERR_NOT_ENOUGH_RESOURCES) {
-                        creep.memory.state = 'idle';
-                        creep.say('💤');
+            let target = Game.getObjectById(creep.memory.targetID);
+            if(target != null) {
+                if(creep.pos.inRangeTo(target.pos, 1)) {
+                    if(target.store[RESOURCE_ENERGY] >= creep.memory.reserved) {
+                        creep.withdraw(target, RESOURCE_ENERGY);
+                        target.memory.reserved -= creep.memory.reserved;
+                        creep.memory.reserved = 0;
                     }
                     else {
-                        creep.say('🔄');
+                        creep.say('⏳');
                     }
                 }
+                else {
+                    creep.memory.state = 'way-get';
+                    creep.say('📥');
+                }
+            }
+            if(creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
+                creep.memory.state = 'flee->carry';
+            }
+            else {
+                creep.memory.state = 'idle';
+                creep.say('💤');
             }
         }
 
         if(creep.memory.state == 'flee->carry') {
-            let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
-            if(path.length > 0 && 0) {
-                creep.moveByPath(path);
-                creep.say('⏏️');
-            }
-            else {
+            // const path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
+            // if(path.length > 0 && 0) {
+            //     creep.moveByPath(path);
+            //     creep.say('⏏️');
+            // }
+            // else {
                 creep.memory.state = 'carry';
-            }
+            // }
         }
         
         if(creep.memory.state == 'carry') {
-            creep.say('📦');
-            if(creep.store[RESOURCE_ENERGY] == 0) {
-                creep.memory.state = 'idle';
-            }
-            else {
-                if(Game.spawns['Spawn1'].store.getFreeCapacity(RESOURCE_ENERGY) - Game.spawns['Spawn1'].memory.reserved > 0) {
-                    target = Game.spawns['Spawn1'];
+            let target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
+                filter: (object) => { 
+                    return object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
                 }
-                else {
-                    target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                        filter: (object) => { 
-                            return object.structureType == STRUCTURE_EXTENSION && object.energy + object.memory.reserved < object.energyCapacity;
+            });
+            if(target == null) {
+                target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                    filter: (object) => { 
+                        return object.structureType == STRUCTURE_EXTENSION && object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
+                    }
+                });
+                if(target == null) {
+                    target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                        filter: function(object) {
+                            return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
                         }
                     });
                     if(target == null) {
-                        target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                        target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
                             filter: function(object) {
-                                return object.structureType == STRUCTURE_TOWER && object.memory.state == 'fill' && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
+                                return object.memory.role == 'worker' && object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < creep.pos.getRangeTo(object.pos)*4;
                             }
                         });
                         if(target == null) {
-                            target = creep.pos.findClosestByPath(FIND_MY_CREEPS, {
+                            target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                                 filter: function(object) {
-                                    return object.memory.role == 'worker' && object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < ( Math.abs(object.pos.x - creep.pos.x) + Math.abs(object.pos.y - creep.pos.y) )*4;
+                                    return object.structureType == STRUCTURE_TOWER && object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
                                 }
                             });
-                            if(target == null) {
-                                target = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                                    filter: function(object) {
-                                        return object.structureType == STRUCTURE_TOWER && object.store.getFreeCapacity(RESOURCE_ENERGY) - object.memory.reserved > 0;
-                                    }
-                                });                                
-                            }
                         }
                     }
                 }
-                if(target != null) {
-                    target.memory.reserved += creep.store[RESOURCE_ENERGY];
-                    creep.memory.reserved = creep.store[RESOURCE_ENERGY];
-                    creep.memory.targetID = target.id;
-                    creep.memory.state = 'give';
-                    Memory.nTask++;
-                    console.log('#'+creep.id+' will deliver '+creep.memory.reserved+' energy to #'+target.id);
-                }
             }
-        }
-            
-        if(creep.memory.state == 'give') {
-            if(creep.store[RESOURCE_ENERGY] == 0){
-                target.memory.reserved -= creep.memory.reserved;
-                creep.memory.reserved = 0;
-                creep.memory.state = 'flee->idle';
-                creep.say('✅︎️');
-            }
-            else if(target.memory.role != 'worker' && target.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
-                target.memory.reserved -= creep.memory.reserved;
-                creep.memory.reserved = 0;
-                creep.memory.state = 'flee->carry';
-                creep.say('✅︎️');
+            if(target != null) {
+                target.memory.reserved += creep.store[RESOURCE_ENERGY];
+                creep.memory.reserved = creep.store[RESOURCE_ENERGY];
+                creep.memory.targetID = target.id;
+                creep.memory.state = 'way-give';
+                Memory.nTask++;
+                console.log('#'+creep.id+' will deliver '+creep.memory.reserved+' energy to #'+target.id);
             }
             else {
-                var ERR = creep.transfer(target, RESOURCE_ENERGY);
-                target.memory.reserved -= creep.memory.reserved - creep.store[RESOURCE_ENERGY];
-                creep.memory.reserved = creep.store[RESOURCE_ENERGY];
-                if(ERR == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
+                creep.say('📦');
+            }
+        }
+
+        if(creep.memory.state == 'way-give') {
+            let target = Game.getObjectById(creep.memory.targetID);
+            if(target != null) {
+                const path = PathFinder.search(creep.pos, target.pos).path;
+                if(path.length > 1) {
+                    creep.move(path[0].direction);
+                    new RoomVisual(creep.room.name).poly(path, {stroke: '#ffcc66', lineStyle: 'dashed'}); 
                     creep.say('📤');
                 }
                 else {
-                    creep.say('🔄');
+                    creep.memory.state = 'give';
                 }
+            }
+            else {
+                creep.memory.state = 'carry';
+                creep.say('📦');
+            }
+        }
+
+        if(creep.memory.state == 'give') {
+            let target = Game.getObjectById(creep.memory.targetID);
+            if(target != null) {
+                if(creep.pos.inRangeTo(target.pos, 1)) {
+                    if(target.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
+                        creep.transfer(target, RESOURCE_ENERGY);
+                        target.memory.reserved -= creep.memory.reserved;
+                        creep.memory.reserved = 0;
+                    }
+                    else {
+                        creep.say('⏳');
+                    }
+                }
+                else {
+                    creep.memory.state = 'way-give';
+                    creep.say('📥');
+                }
+            }
+            if(creep.store[RESOURCE_ENERGY] == 0) {
+                creep.memory.state = 'flee->idle';
+            }
+            else {
+                creep.memory.state = 'carry';
+                creep.say('📦');
             }
         }
 
         if(creep.memory.state == 'flee->idle') {
-            let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
-            if(path.length > 0 && 0) {
-                creep.moveByPath(path);
-                creep.say('⏏️');
-            }
-            else {
+            // let path = PathFinder.search(creep.pos, {pos: target.pos, range: 3 }, { flee: true }).path;
+            // if(path.length > 0 && 0) {
+            //     creep.moveByPath(path);
+            //     creep.say('⏏️');
+            // }
+            // else {
                 creep.memory.state = 'idle';
-            }
+                creep.say('✅︎️');
+            // }
         }
 
-	}
+    }
 };
 
 module.exports = roleCourier;

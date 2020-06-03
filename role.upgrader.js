@@ -1,32 +1,40 @@
-var roleUpgrader = {
+const roleUpgrader = {
     run: function(creep) {
         
         if(creep.memory.state == 'idle') {
-            creep.say('💤');
-            const _path = creep.pos.findPathTo(Game.flags['Flag_upgrade'].pos);
-            if(_path.length < 2) {
-                creep.memory.state = 'work';
+            if(creep.room.controller != undefined && creep.room.controller.my) {
+                creep.memory.state = 'arrive';
             }
             else {
-                creep.move(_path[0].direction);
+                creep.say('💤');
             }
         }
-        
+
+        if(creep.memory.state == 'arrive') {
+            const path = PathFinder.search(creep.pos, creep.room.controller.pos).path;
+            if(path.length > 3) {
+                creep.move(path[0].direction);
+                creep.say('🎯');
+            }
+            else {
+                creep.memory.state = 'work';
+            }
+        }
+
         if(creep.memory.state == 'work') {
             if(creep.store[RESOURCE_ENERGY] != 0) {
-                if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-                    creep.say('🎯');
+                if(creep.upgradeController(creep.room.controller) == OK) {
+                    creep.say('🆙️️');
                 }
                 else {
-                    creep.say('🆙️️');
+                    creep.memory.state = 'idle';
                 }
             }
             else {
                 creep.say('⏹');
             }
         }
-	}
+    }
 };
 
 module.exports = roleUpgrader;

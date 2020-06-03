@@ -1,4 +1,4 @@
-var taskInit = {
+const taskInit = {
     run: function() {/*
         Object.defineProperty(Source.prototype, 'memory', {
             get: function() {
@@ -36,12 +36,12 @@ var taskInit = {
                     Memory.myStructuresMemory = {};
                 }
                 if(!_.isObject(Memory.myStructuresMemory)) {
-                    throw new Error('Could not set source memory');
+                    throw new Error('Could not set structure memory');
                 }
                 Memory.myStructuresMemory[this.id] = value;
             }
         });
-	}
+    }
 };
 
 module.exports = taskInit;
