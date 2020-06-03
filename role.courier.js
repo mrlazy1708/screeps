@@ -147,7 +147,7 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
                         creep.transfer(target, RESOURCE_ENERGY);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.reserved = 0;
