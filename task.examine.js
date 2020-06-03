@@ -18,4 +18,4 @@ const taskExamine = {
     }
 };
 
-module.exports = taskExmaine;
+module.exports = taskExamine;
