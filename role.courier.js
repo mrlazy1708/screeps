@@ -22,11 +22,10 @@ const roleCourier = {
 
         if(creep.memory.state == 'way-get') {
             let target = Game.getObjectById(creep.memory.targetID);
-            console.log(target);
             if(target != null) {
                 const path = PathFinder.search(creep.pos, target.pos).path;
                 if(path.length > 1) {
-                    creep.move(path[0].direction);
+                    creep.move(creep.pos.getDirectionTo(path[0]));
                     new RoomVisual(creep.room.name).poly(path, {stroke: '#66ccff', lineStyle: 'dashed'}); 
                     creep.say('📥');
                 }
