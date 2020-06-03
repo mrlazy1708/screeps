@@ -28,6 +28,7 @@ const roleCourier = {
                         creep.withdraw(target, RESOURCE_ENERGY);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.reserved = 0;
+                        creep.memory.state = 'flee->carry';
                     }
                     else {
                         creep.say('⏳');
@@ -37,13 +38,6 @@ const roleCourier = {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
                     creep.say('📥');
                 }
-            }
-            if(creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
-                creep.memory.state = 'flee->carry';
-            }
-            else {
-                creep.memory.state = 'idle';
-                creep.say('💤');
             }
         }
 
@@ -113,6 +107,7 @@ const roleCourier = {
                         creep.transfer(target, RESOURCE_ENERGY);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.reserved = 0;
+                        creep.memory.state = 'flee->idle';
                     }
                     else {
                         creep.say('⏳');
@@ -122,13 +117,6 @@ const roleCourier = {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
                     creep.say('📥');
                 }
-            }
-            if(creep.store[RESOURCE_ENERGY] == 0) {
-                creep.memory.state = 'flee->idle';
-            }
-            else {
-                creep.memory.state = 'carry';
-                creep.say('📦');
             }
         }
 
