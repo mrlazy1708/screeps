@@ -36,9 +36,8 @@ const roleHarvester = {
         if(creep.memory.state == 'arrive') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
-                const path = PathFinder.search(creep.pos, target.pos).path;
-                if(path.length > 0) {
-                    creep.move(creep.pos.getDirectionTo(path[0]));
+                if(!creep.pos.inRangeTo(target.pos, 0)) {
+                    creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                     creep.say('🎯');
                 }
                 else {

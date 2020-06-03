@@ -11,30 +11,11 @@ const roleCourier = {
                 target.memory.reserved += creep.store.getFreeCapacity();
                 creep.memory.reserved = creep.store.getFreeCapacity();
                 creep.memory.targetID = target.id;
-                creep.memory.state = 'way-get';
+                creep.memory.state = 'get';
                 Memory.nTask++;
                 console.log('#'+creep.id+' will fetch '+creep.memory.reserved+' energy from #'+target.id);
             }
             else {
-                creep.say('💤');
-            }
-        }
-
-        if(creep.memory.state == 'way-get') {
-            let target = Game.getObjectById(creep.memory.targetID);
-            if(target != null) {
-                const path = PathFinder.search(creep.pos, target.pos).path;
-                if(path.length > 1) {
-                    creep.move(creep.pos.getDirectionTo(path[0]));
-                    new RoomVisual(creep.room.name).poly(path, {stroke: '#66ccff', lineStyle: 'dashed'}); 
-                    creep.say('📥');
-                }
-                else {
-                    creep.memory.state = 'get';
-                }
-            }
-            else {
-                creep.memory.state = 'idle';
                 creep.say('💤');
             }
         }
@@ -53,7 +34,7 @@ const roleCourier = {
                     }
                 }
                 else {
-                    creep.memory.state = 'way-get';
+                    creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
                     creep.say('📥');
                 }
             }
@@ -115,30 +96,11 @@ const roleCourier = {
                 target.memory.reserved += creep.store[RESOURCE_ENERGY];
                 creep.memory.reserved = creep.store[RESOURCE_ENERGY];
                 creep.memory.targetID = target.id;
-                creep.memory.state = 'way-give';
+                creep.memory.state = 'give';
                 Memory.nTask++;
                 console.log('#'+creep.id+' will deliver '+creep.memory.reserved+' energy to #'+target.id);
             }
             else {
-                creep.say('📦');
-            }
-        }
-
-        if(creep.memory.state == 'way-give') {
-            let target = Game.getObjectById(creep.memory.targetID);
-            if(target != null) {
-                const path = PathFinder.search(creep.pos, target.pos).path;
-                if(path.length > 1) {
-                    creep.move(creep.pos.getDirectionTo(path[0]));
-                    new RoomVisual(creep.room.name).poly(path, {stroke: '#ffcc66', lineStyle: 'dashed'}); 
-                    creep.say('📤');
-                }
-                else {
-                    creep.memory.state = 'give';
-                }
-            }
-            else {
-                creep.memory.state = 'carry';
                 creep.say('📦');
             }
         }
@@ -157,7 +119,7 @@ const roleCourier = {
                     }
                 }
                 else {
-                    creep.memory.state = 'way-give';
+                    creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
                     creep.say('📥');
                 }
             }

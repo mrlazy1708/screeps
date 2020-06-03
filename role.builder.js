@@ -16,13 +16,12 @@ const roleBuilder = {
         }
 
         if(creep.memory.state == 'arrive') {
-            const path = PathFinder.search(creep.pos, target.pos).path;
-            if(path.length > 0) {
-                creep.move(creep.pos.getDirectionTo(path[0]));
+            const target = Game.getObjectById(creep.memory.targetID);
+            if(!creep.pos.inRangeTo(target.pos, 1)) {
+                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
                 creep.say('🎯');
             }
             else {
-                creep.move(PathFinder.search(creep.pos, { pos: target.pos, range: 1 }, { flee: true }).path[0].direction);
                 creep.memory.state = 'work';
             }
         }
