@@ -58,5 +58,5 @@ module.exports.loop = function () {
 	    if(Game.time % 300 == 0) {
 	        taskNotify.run();
 	    }
-	}
+	});
 }
