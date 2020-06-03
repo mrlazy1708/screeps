@@ -22,6 +22,7 @@ const roleCourier = {
 
         if(creep.memory.state == 'way-get') {
             let target = Game.getObjectById(creep.memory.targetID);
+            console.log(target);
             if(target != null) {
                 const path = PathFinder.search(creep.pos, target.pos).path;
                 if(path.length > 1) {
