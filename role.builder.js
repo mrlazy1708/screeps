@@ -18,7 +18,7 @@ const roleBuilder = {
         if(creep.memory.state == 'arrive') {
             const path = PathFinder.search(creep.pos, target.pos).path;
             if(path.length > 0) {
-                creep.move(path[0].direction);
+                creep.move(creep.pos.getDirectionTo(path[0]));
                 creep.say('🎯');
             }
             else {

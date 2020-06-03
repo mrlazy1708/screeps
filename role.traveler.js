@@ -9,7 +9,7 @@ const roleTraveler = {
 
         if(creep.memory.state == 'travel') {
             const path = creep.pos.findPathTo(creep.memory.targetPos);
-            creep.move(path[0].direction);
+            creep.move(creep.pos.getDirectionTo(path[0]));
             if(path.length == 1) {
                 creep.memory.state = 'idle';
             }

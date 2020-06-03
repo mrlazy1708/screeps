@@ -129,7 +129,7 @@ const roleCourier = {
             if(target != null) {
                 const path = PathFinder.search(creep.pos, target.pos).path;
                 if(path.length > 1) {
-                    creep.move(path[0].direction);
+                    creep.move(creep.pos.getDirectionTo(path[0]));
                     new RoomVisual(creep.room.name).poly(path, {stroke: '#ffcc66', lineStyle: 'dashed'}); 
                     creep.say('📤');
                 }

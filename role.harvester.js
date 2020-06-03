@@ -2,7 +2,7 @@ const roleHarvester = {
     run: function(creep) {
 
         if(creep.memory.state == 'idle') {
-            let freeContainer = creep.room.findClosestByPath(FIND_STRUCTURES, {
+            let freeContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: function(object) {
                     object.structureType == STRUCTURE_CONTAINER && Game.getObjectById(object.memory.hostID) == null;
                 }
@@ -15,7 +15,7 @@ const roleHarvester = {
                 creep.memory.state = 'arrive';
             }
             else {
-                let freeFlag = creep.room.findClosestByPath(FIND_FLAGS, {
+                let freeFlag = creep.pos.findClosestByPath(FIND_FLAGS, {
                     filter: function(object) {
                         object.memory.type = 'harvestNavi' && Game.getObjectById(object.memory.hostID) == null;
                     }
@@ -38,7 +38,7 @@ const roleHarvester = {
             if(target != null) {
                 const path = PathFinder.search(creep.pos, target.pos).path;
                 if(path.length > 0) {
-                    creep.move(path[0].direction);
+                    creep.move(creep.pos.getDirectionTo(path[0]));
                     creep.say('🎯');
                 }
                 else {

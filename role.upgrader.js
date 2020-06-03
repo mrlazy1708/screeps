@@ -13,7 +13,7 @@ const roleUpgrader = {
         if(creep.memory.state == 'arrive') {
             const path = PathFinder.search(creep.pos, creep.room.controller.pos).path;
             if(path.length > 3) {
-                creep.move(path[0].direction);
+                creep.move(creep.pos.getDirectionTo(path[0]));
                 creep.say('🎯');
             }
             else {
