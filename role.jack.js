@@ -18,7 +18,7 @@ const roleJack = {
                 creep.memory.state = 'get';
             }
             else {
-                let target = creep.room.find(FIND_SPAWNS, {
+                let target = creep.room.find(FIND_MY_SPAWNS, {
                     filter: function(object) {
                         return object.store.getFreeCapacity(RESOURCE_ENERGY) != 0;
                     }
