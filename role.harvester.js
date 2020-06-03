@@ -4,7 +4,7 @@ const roleHarvester = {
         if(creep.memory.state == 'idle') {
             let freeContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: function(object) {
-                    return object.structureType == STRUCTURE_CONTAINER && Game.getObjectById(object.memory.hostID) == null;
+                    return object.structureType == STRUCTURE_CONTAINER && object.memory.hostID != creep.id;
                 }
             });
             if(freeContainer != null) {
