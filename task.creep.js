@@ -1,6 +1,7 @@
 const roleBuilder = require('role.builder');
 const roleCourier = require('role.courier');
 const roleHarvester = require('role.harvester');
+const roleJack = require('role.jack');
 const roleSpawn = require('role.spawn');
 const roleTraveler = require('role.traveler');
 const roleUpgrader = require('role.upgrader');
@@ -31,6 +32,10 @@ const taskCreep = {
                         if(creep.memory.role == 'worker') {
                             roleUpgrader.run(creep);
                             nWorker++;
+                        }
+
+                        if(creep.memory.role == 'jack') {
+                            roleJack.run(creep);
                         }
                     }
                     else {
