@@ -109,7 +109,7 @@ const roleCourier = {
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
                     if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.role != 'worker') {
-                        if(creep.store[RESOURCE_ENERGY] == target.store.getFreeCapacity(RESOURCE_ENERGY)) {
+                        if(creep.store[RESOURCE_ENERGY] == Math.min(target.store.getFreeCapacity(RESOURCE_ENERGY), creep.memory.reserved)) {
                             creep.memory.state = 'flee->idle';
                         }
                         else {
