@@ -7,7 +7,7 @@ const roleTraveler = require('role.traveler');
 const roleUpgrader = require('role.upgrader');
 
 const taskCreep = {
-    run: function(room) {
+    run: function() {
         let nFreeCourier = 0, nCourier = 0, nHarvester = 0, nWorker = 0, nJack = 0;
         
         for(let name in Memory.creeps) {
