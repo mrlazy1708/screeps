@@ -1,6 +1,15 @@
 const roleJack = {
     run: function(creep) {
 
+        if(creep.memory.state == 'idle') {
+            if(creep.store[RESOURCE_ENERGY] == 0) {
+                creep.memory.state = 'get';
+            }
+            else {
+                creep.memory.state = 'give';
+            }
+        }
+
         if(creep.memory.state == 'get') {
             if(creep.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
                 creep.memory.state = 'give';
