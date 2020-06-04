@@ -125,7 +125,7 @@ const roleCourier = {
                 }
                 else {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
-                    creep.say('📥');
+                    creep.say('📤');
                 }
             }
             else {
