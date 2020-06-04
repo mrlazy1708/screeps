@@ -109,7 +109,7 @@ const roleCourier = {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
                     if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.store[RESOURCE_ENERGY] == 0 || target.memory.role != 'worker') {
                         creep.transfer(target, RESOURCE_ENERGY);
-                        const nRem = Math.max(creep.memory.store[RESOURCE_ENERGY] - target.store.getFreeCapacity(RESOURCE_ENERGY), 0);
+                        const nRem = Math.max(creep.store[RESOURCE_ENERGY] - target.store.getFreeCapacity(RESOURCE_ENERGY), 0);
                         target.memory.reserved -= creep.memory.reserved - nRem;
                         creep.memory.reserved = nRem;
                         if(nRem == 0) {
