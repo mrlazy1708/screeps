@@ -15,7 +15,7 @@ const taskCreep = {
 
             if(creep != null) {//ticks to live
                 if(creep.painc != Game.time){
-                    if(creep.room.name == creep.memory.roomName) {
+                    if(creep.memory.curRoom == creep.memory.roomName) {
                         if(creep.memory.role == 'courier') {
                             roleCourier.run(creep);
                             if(creep.memory.state != 'get' && creep.memory.state != 'give') {
@@ -36,6 +36,7 @@ const taskCreep = {
 
                         if(creep.memory.role == 'jack') {
                             roleJack.run(creep);
+                            nJack++;
                         }
                     }
                     else {
@@ -58,10 +59,12 @@ const taskCreep = {
             }
         }
 
-        return {nHarvester: nHarvester, };
 const room = Game.spawns['Spawn1'].room;
         if(!Game.spawns['Spawn1'].spawning) {
-            if(nHarvester < 2 && nCourier >= 1) {
+            if(nJack == 0) {
+                Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Jack_'+Game.time, {memory: {role: 'jack', roomName: 'E44S32', state: 'idle'}});
+            }
+            else if(nHarvester < 2 && nCourier >= 1) {
                 Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, WORK, MOVE, MOVE, MOVE], 'Harvester_'+Game.time, {memory: {role: 'harvester', roomName: room.name, state: 'idle', reserved: 0}});
             }
             else if(nFreeCourier < 1) {
