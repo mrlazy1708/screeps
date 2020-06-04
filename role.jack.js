@@ -27,7 +27,7 @@ const roleJack = {
                 creep.memory.state = 'get';
             }
             else {
-                var target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
+                let target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
                     filter: function(object) {
                         return object.store.getFreeCapacity(RESOURCE_ENERGY) != 0;
                     }
@@ -38,11 +38,12 @@ const roleJack = {
                             return object.structureType == STRUCTURE_EXTENSION && object.store.getFreeCapacity(RESOURCE_ENERGY) != 0;
                         }
                     });
-                }
-                if(target != null) {
-                  if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        creep.moveTo(target);
+                    if(target == null) {
+                        target = creep.room.controller;
                     }
+                }
+                if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
                 }
             }
         }
