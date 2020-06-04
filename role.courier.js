@@ -60,7 +60,7 @@ const roleCourier = {
         if(creep.memory.state == 'carry') {
             let target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
                 filter: (object) => { 
-                    return object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
+                    return object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < -creep.pos.getRangeTo(object.pos);
                 }
             });
             if(target == null) {
@@ -93,11 +93,7 @@ const roleCourier = {
             }
             if(target != null) {
                 if(target.memory.role == 'worker') {
-                    creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], target.store.getCapacity(RESOURCE_ENERGY));
-                }
-                else {
-                    creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], target.store.getFreeCapacity(RESOURCE_ENERGY));
-                }
+                creep.memory.reserved = creep.store[RESOURCE_ENERGY];
                 target.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = target.id;
                 creep.memory.state = 'give';
@@ -113,16 +109,15 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
-                        creep.transfer(target, RESOURCE_ENERGY, creep.memory.reserved);
-                        target.memory.reserved -= creep.memory.reserved;
-                        console.log(creep.store[RESOURCE_ENERGY] + creep.memory.reserved);
-                        if(creep.store[RESOURCE_ENERGY] == creep.memory.reserved) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.role != 'worker') {
+                        creep.transfer(target, RESOURCE_ENERGY);
+                        if(creep.store[RESOURCE_ENERGY] - Math.min(target.store.getFreeCapacity(RESOURCE_ENERGY), creep.memory.reserved) == 0) {
                             creep.memory.state = 'flee->idle';
                         }
                         else {
                             creep.memory.state = 'flee->carry';
                         }
+                        target.memory.reserved -= creep.memory.reserved;
                         creep.memory.reserved = 0;
                     }
                     else {
