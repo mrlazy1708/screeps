@@ -8,7 +8,7 @@ const taskNotify = require('task.notify');
 profiler.enable();
 
 module.exports.loop = function () {
-	profiler.wrap(function() {
+	// profiler.wrap(function() {
 		taskInit.run();
 
 		for(let name in Game.rooms) {
@@ -17,13 +17,13 @@ module.exports.loop = function () {
 			if(enemys.length) {
 				if(!room.memory.invaded) {
 					room.memory.invaded = true;
-					Memory.message += Game.time+': '+enemys.length+' creep '+(enemys.length==1?'':'s')+' of '+enemys[0].owner.username+' found in '+room.name+'\n';
-					console.log('Room '+room.name+'is under attack!');
+					Memory.message += Game.time+': '+enemys.length+enemys[0].owner.username+'\'s creep'+(enemys.length==1?'':'s')+' in '+room.name+'\n';
+					console.log('Room '+room.name+' is under attack!');
 				}
 				enemys.forEach(function(object) {
 					let victims = object.pos.findInRange(FIND_MY_CREEPS, 5, {
 						filter: function(object) {
-							return object.painc != Game.time;
+							return object.memory.painc != Game.time;
 						}
 					});
 					victims.forEach(function(creep) {
@@ -58,5 +58,5 @@ module.exports.loop = function () {
 	    if(Game.time % 300 == 0) {
 	        taskNotify.run();
 	    }
-	});
+	// });
 }

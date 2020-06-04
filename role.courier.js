@@ -53,6 +53,7 @@ const roleCourier = {
             // }
             // else {
                 creep.memory.state = 'carry';
+                creep.say('✅︎️');
             // }
             return;
         }
@@ -60,7 +61,7 @@ const roleCourier = {
         if(creep.memory.state == 'carry') {
             let target = creep.pos.findClosestByPath(FIND_MY_SPAWNS, {
                 filter: (object) => { 
-                    return object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < creep.pos.getRangeTo(object.pos)*(-1);
+                    return object.memory.reserved - object.store.getFreeCapacity(RESOURCE_ENERGY) < 0;
                 }
             });
             if(target == null) {
