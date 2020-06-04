@@ -91,8 +91,13 @@ const roleCourier = {
                 }
             }
             if(target != null) {
-                target.memory.reserved += creep.store[RESOURCE_ENERGY];
-                creep.memory.reserved = creep.store[RESOURCE_ENERGY];
+                if(target.memory.role == 'worker') {
+                    creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], target.store.getCapacity(RESOURCE_ENERGY));
+                }
+                else {
+                    creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], target.store.getFreeCapacity(RESOURCE_ENERGY));
+                }
+                target.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = target.id;
                 creep.memory.state = 'give';
                 Memory.nTask++;
@@ -107,17 +112,17 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.store[RESOURCE_ENERGY] == 0 || target.memory.role != 'worker') {
-                        creep.transfer(target, RESOURCE_ENERGY);
-                        const nRem = Math.max(creep.store[RESOURCE_ENERGY] - target.store.getFreeCapacity(RESOURCE_ENERGY), 0);
-                        target.memory.reserved -= creep.memory.reserved - nRem;
-                        creep.memory.reserved = nRem;
-                        if(nRem == 0) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
+                        creep.transfer(target, RESOURCE_ENERGY, creep.memory.reserved);
+                        target.memory.reserved -= creep.memory.reserved;
+                        creep.memory.reserved = 0;
+                        if(creep.store[RESOURCE_ENERGY] == creep.memory.reserved) {
                             creep.memory.state = 'flee->idle';
                         }
-                        else if(target.memory.role != 'worker'){
+                        else {
                             creep.memory.state = 'flee->carry';
                         }
+
                     }
                     else {
                         creep.say('⏳');
