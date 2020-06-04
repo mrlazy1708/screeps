@@ -92,7 +92,6 @@ const roleCourier = {
                 }
             }
             if(target != null) {
-                if(target.memory.role == 'worker') {
                 creep.memory.reserved = creep.store[RESOURCE_ENERGY];
                 target.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = target.id;
@@ -110,13 +109,13 @@ const roleCourier = {
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
                     if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.role != 'worker') {
-                        creep.transfer(target, RESOURCE_ENERGY);
-                        if(creep.store[RESOURCE_ENERGY] == Math.min(target.store.getFreeCapacity(RESOURCE_ENERGY), creep.memory.reserved)) {
+                        if(creep.store[RESOURCE_ENERGY] == target.store.getFreeCapacity(RESOURCE_ENERGY)) {
                             creep.memory.state = 'flee->idle';
                         }
                         else {
                             creep.memory.state = 'flee->carry';
                         }
+                        creep.transfer(target, RESOURCE_ENERGY);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.reserved = 0;
                     }
