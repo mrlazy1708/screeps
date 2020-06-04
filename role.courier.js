@@ -39,6 +39,10 @@ const roleCourier = {
                     creep.say('📥');
                 }
             }
+            else {
+                creep.memory.state = 'idle';
+                creep.say('💤');
+            }
         }
 
         if(creep.memory.state == 'flee->carry') {
@@ -103,11 +107,17 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.store[RESOURCE_ENERGY] == 0 || target.memory.role != 'worker') {
                         creep.transfer(target, RESOURCE_ENERGY);
-                        target.memory.reserved -= creep.memory.reserved;
-                        creep.memory.reserved = 0;
-                        creep.memory.state = 'flee->idle';
+                        const nRem = Math.max(creep.memory.store[RESOURCE_ENERGY] - target.store.getFreeCapacity(RESOURCE_ENERGY), 0);
+                        target.memory.reserved -= creep.memory.reserved - nRem;
+                        creep.memory.reserved = nRem;
+                        if(nRem == 0) {
+                            creep.memory.state = 'flee->idle';
+                        }
+                        else if(target.memory.role != 'worker'){
+                            creep.memory.state = 'flee->carry';
+                        }
                     }
                     else {
                         creep.say('⏳');
@@ -117,6 +127,10 @@ const roleCourier = {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
                     creep.say('📥');
                 }
+            }
+            else {
+                creep.memory.state = 'carry';
+                creep.say('📦');                
             }
         }
 
