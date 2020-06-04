@@ -115,14 +115,13 @@ const roleCourier = {
                     if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
                         creep.transfer(target, RESOURCE_ENERGY, creep.memory.reserved);
                         target.memory.reserved -= creep.memory.reserved;
-                        creep.memory.reserved = 0;
                         if(creep.store[RESOURCE_ENERGY] == creep.memory.reserved) {
                             creep.memory.state = 'flee->idle';
                         }
                         else {
                             creep.memory.state = 'flee->carry';
                         }
-
+                        creep.memory.reserved = 0;
                     }
                     else {
                         creep.say('⏳');
