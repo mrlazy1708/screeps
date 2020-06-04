@@ -54,6 +54,7 @@ const roleCourier = {
             // else {
                 creep.memory.state = 'carry';
             // }
+            return;
         }
         
         if(creep.memory.state == 'carry') {
@@ -115,6 +116,7 @@ const roleCourier = {
                     if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
                         creep.transfer(target, RESOURCE_ENERGY, creep.memory.reserved);
                         target.memory.reserved -= creep.memory.reserved;
+                        console.log(creep.store[RESOURCE_ENERGY] + creep.memory.reserved);
                         if(creep.store[RESOURCE_ENERGY] == creep.memory.reserved) {
                             creep.memory.state = 'flee->idle';
                         }
@@ -148,6 +150,7 @@ const roleCourier = {
                 creep.memory.state = 'idle';
                 creep.say('✅︎️');
             // }
+            return;
         }
 
     }
