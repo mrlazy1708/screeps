@@ -7,8 +7,8 @@ const roleTraveler = require('role.traveler');
 const roleUpgrader = require('role.upgrader');
 
 const taskCreep = {
-    run: function() {
-        let nFreeCourier = 0, nCourier = 0, nHarvester = 0, nWorker = 0;
+    run: function(room) {
+        let nFreeCourier = 0, nCourier = 0, nHarvester = 0, nWorker = 0, nJack = 0;
         
         for(let name in Memory.creeps) {
             let creep = Game.creeps[name];
@@ -57,6 +57,8 @@ const taskCreep = {
                 Memory.nDeath++;
             }
         }
+
+        return {nHarvester: nHarvester, };
 const room = Game.spawns['Spawn1'].room;
         if(!Game.spawns['Spawn1'].spawning) {
             if(nHarvester < 2 && nCourier >= 1) {

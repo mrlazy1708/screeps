@@ -1,5 +1,5 @@
 const taskRoom = {
-    run: function(enemys) {
+    run: function(need) {
 
         for(let name in Game.rooms) {
             let room = Game.rooms[name];

@@ -12,7 +12,8 @@ module.exports.loop = function () {
 	// profiler.wrap(function() {
 		taskInit.run();
 
-		taskRoom.run();
+		let need = [];
+		taskRoom.run(need);
 
 		taskCreep.run();
 
