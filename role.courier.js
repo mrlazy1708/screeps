@@ -1,6 +1,6 @@
 const roleCourier = {
     run: function(creep) {
-        if(memory.state == 'idle') {
+        if(creep.memory.state == 'idle') {
             creep.room.empty.push(creep);
             creep.say('💤');
         }
