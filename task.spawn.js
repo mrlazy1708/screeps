@@ -1,3 +1,4 @@
+const pq = require('priority_queue');
 const roleSpawn = require('role.spawn');
 
 const taskSpawn = {
@@ -6,9 +7,9 @@ const taskSpawn = {
         for(let roomName in Game.rooms) {
             let room = Game.rooms[roomName], spawns = idleSpawns[roomName];
             for(let spawnName in spawns) {
-                const task = room.memory.q.top();
+                const task = pq.top(room.memory.q);
                 if(roleSpawn.run(spawns[spawnName], task.role, task.home, task.work)) {
-                    room.memory.q.remove();
+                    pq.remove(room.memory.q);
                     console.log(spawn.name + ' is spawning ' + task.role + ' to room' + task.home);
                 }
             }
