@@ -1,8 +1,5 @@
-const taskExamine = require('task.examine');
-
-const roleBuilder = {
+const workBuild = {
     run: function(creep) {
-
         if(creep.memory.state == 'idle') {
             const target = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
             if(target != null) {
@@ -14,7 +11,6 @@ const roleBuilder = {
                 creep.say('💤');
             }
         }
-
         if(creep.memory.state == 'arrive') {
             const target = Game.getObjectById(creep.memory.targetID);
             if(!creep.pos.inRangeTo(target.pos, 1)) {
@@ -25,7 +21,6 @@ const roleBuilder = {
                 creep.memory.state = 'work';
             }
         }
-
         if(creep.memory.state == 'work') {
             const target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -43,7 +38,7 @@ const roleBuilder = {
                 }
             }
             else {
-                taskExamine.run(creep.room);
+                require('task.examine').run(creep.room);
                 creep.memory.state = 'idle';
                 creep.say('✅︎️');
             }
@@ -51,4 +46,4 @@ const roleBuilder = {
     }
 };
 
-module.exports = roleBuilder;
+module.exports = workBuild;

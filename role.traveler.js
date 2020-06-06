@@ -1,13 +1,12 @@
 const roleTraveler = {
     run: function(creep) {
-
         if(creep.memory.curRoom == creep.room.name) {
             creep.moveTo(new RoomPosition(creep.memory.x, creep.memory.y, creep.room.name));
             creep.say('🚌');
         }
         else {
             creep.memory.curRoom = creep.room.name;
-            if(creep.memory.curRoom == creep.memory.roomName) {
+            if(creep.memory.curRoom == creep.memory.home) {
                 delete creep.memory.curRoom;
                 if(creep.pos.x == 0) {
                     creep.move(RIGHT);
@@ -25,7 +24,7 @@ const roleTraveler = {
                 creep.say('🗽');
             }
             else {
-                const target = creep.pos.findClosestByPath(Game.map.findRoute(creep.room, creep.memory.roomName)[0].exit);
+                const target = creep.pos.findClosestByPath(Game.map.findRoute(creep.room, creep.memory.home)[0].exit);
                 creep.memory.x = target.x;
                 creep.memory.y = target.y;
                 creep.say('💤');

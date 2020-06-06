@@ -1,4 +1,4 @@
-const roleJack = {
+const workJack = {
     run: function(creep) {
 
         if(creep.memory.state == 'idle') {
@@ -50,4 +50,4 @@ const roleJack = {
     }
 };
 
-module.exports = roleJack;
+module.exports = workJack;

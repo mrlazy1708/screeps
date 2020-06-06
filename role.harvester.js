@@ -1,6 +1,5 @@
 const roleHarvester = {
     run: function(creep) {
-
         if(creep.memory.state == 'idle') {
             let freeContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: function(object) {
@@ -15,24 +14,9 @@ const roleHarvester = {
                 creep.memory.state = 'arrive';
             }
             else {
-                let freeFlag = creep.pos.findClosestByPath(FIND_FLAGS, {
-                    filter: function(object) {
-                        return object.memory.type = 'harvestNavi' && Game.getObjectById(object.memory.hostID) == null;
-                    }
-                });
-                if(freeFlag != null) {
-                    let source = freeFlag.pos.findClosestByRange(FIND_SOURCES);
-                    freeFlag.memory.hostID = creep.id;
-                    creep.memory.targetID = freeFlag.id;
-                    creep.memory.sourceID = source.id;
-                    creep.memory.state = 'arrive';
-                }
-                else {
-                    creep.say('💤');
-                }
+                creep.say('💤');
             }
         }
-
         if(creep.memory.state == 'arrive') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -41,6 +25,8 @@ const roleHarvester = {
                     creep.say('🎯');
                 }
                 else {
+                    Memory.task_spawn.insert({.pri: 2, .time: Game.time + 2 * creep.ticksToLive - 1500, .task: 'spawn', .role: 'harvester', .dest: creep.room.name});
+                    creep.memory.report = true;
                     creep.memory.state = 'work';
                 }
             }
@@ -49,7 +35,6 @@ const roleHarvester = {
                 creep.say('💤');
             }
         }
-        
         if(creep.memory.state == 'work') {
             if(creep.harvest(Game.getObjectById(creep.memory.sourceID)) != ERR_NOT_IN_RANGE) {
                 creep.say('🚨️️');

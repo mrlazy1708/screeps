@@ -1,15 +1,16 @@
 const taskRoom = {
-    run: function(need) {
-
+    run: function() {
         for(let name in Game.rooms) {
-            let room = Game.rooms[name];
-            const enemys = room.find(FIND_HOSTILE_CREEPS);
+            let room = Game.rooms[name], enemys = room.find(FIND_HOSTILE_CREEPS);
+            room.empty = [];
+            room.carry = [];
             if(enemys.length) {
                 if(!room.memory.invaded) {
                     room.memory.invaded = true;
                     Memory.message += Game.time+': '+enemys.length+enemys[0].owner.username+'\'s creep'+(enemys.length==1?'':'s')+' in '+room.name+'\n';
                     console.log('Room '+room.name+' is under attack!');
                 }
+                /*
                 enemys.forEach(function(object) {
                     let victims = object.pos.findInRange(FIND_MY_CREEPS, 5, {
                         filter: function(object) {
@@ -22,7 +23,7 @@ const taskRoom = {
                         creep.memory.panic = Game.time;
                         creep.say('🐥');
                     });
-                });
+                });*/
             }
             else {
                 if(room.memory.invaded) {
