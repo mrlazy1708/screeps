@@ -31,7 +31,7 @@ const taskInit = {
         }
         Array.prototype.insert=function(value){
             this.push(value);
-            for(let i=this.length-1;i>1&&cmp(i,i>>1);i>>=1)[this[i],this[i>>1]]=[this[i>>1],this[i]];
+            for(let i=this.length-1;i>1&&this.cmp(i,i>>1);i>>=1)[this[i],this[i>>1]]=[this[i>>1],this[i]];
         }
         Array.prototype.top=function(){
             return this[1];
