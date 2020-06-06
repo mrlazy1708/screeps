@@ -17,14 +17,7 @@ module.exports.loop = function () {
 		taskStructure.run();
 		taskCreep.run();
 		taskSpawn.run();
-
-	    const CPU_used = Game.cpu.getUsed();
-	    Memory.CPU_sum += CPU_used;
-	    Memory.CPU_min = Math.min(Memory.CPU_min, CPU_used);
-	    Memory.CPU_max = Math.max(Memory.CPU_max, CPU_used);
-
-	    if(Game.time % 300 == 0) {
-	        taskReport.run();
-	    }
+		taskAssign.run();
+		taskReport.run();
 	// });
 }
