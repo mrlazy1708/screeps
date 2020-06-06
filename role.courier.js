@@ -42,8 +42,8 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.role != 'worker') {
-                        if(creep.store[RESOURCE_ENERGY] == Math.min(target.store.getFreeCapacity(RESOURCE_ENERGY), creep.memory.reserved)) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
+                        if(creep.store[RESOURCE_ENERGY] <= creep.memory.reserved) {
                             creep.memory.state = 'idle';
                         }
                         else {
