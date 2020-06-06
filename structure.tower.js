@@ -17,7 +17,7 @@ const structureTower = {
 
         if(tower.memory.state == 'fill') {
             let sum = tower.memory.reserved - tower.store.getFreeCapacoty(RESOURCE_ENERGY);
-            global.collect.insert({.time: 1, .pri: sum, .hostID: tower.id});
+            global.collect.insert({time: 1, pri: sum, hostID: tower.id});
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {

@@ -10,7 +10,7 @@ const taskAssign = {
                 target.memory.reserved += creep.memory.reserved;
                 delete host.room.empty[creep.name];
                 if(task.pri + creep.memory.reserved < 100) {
-                    global.sources.insert({.time: task.time, .pri: task.pri + creep.memory.reserved, .hostID: host.id});
+                    global.sources.insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
             else {
@@ -27,7 +27,7 @@ const taskAssign = {
                 target.memory.reserved += creep.memory.reserved;
                 delete host.room.carry[creep.name];
                 if(task.pri + creep.memory.reserved < 0) {
-                    global.collect.insert({.time: task.time, .pri: task.pri + creep.memory.reserved, .hostID: host.id});
+                    global.collect.insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
             else {
