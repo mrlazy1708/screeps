@@ -1,6 +1,7 @@
 const roleCourier = require('role.courier');
 const roleHarvester = require('role.harvester');
 const roleTraveler = require('role.traveler');
+const roleWorker = require('role.worker');
 
 const taskCreep = {
     run: function() {
