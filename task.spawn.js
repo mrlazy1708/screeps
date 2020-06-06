@@ -8,9 +8,14 @@ const taskSpawn = {
             let room = Game.rooms[roomName], spawns = idleSpawns[roomName];
             for(let spawnName in spawns) {
                 const task = pq.top(room.memory.spawnQ);
-                if(roleSpawn.run(spawns[spawnName], task.role, task.home, task.work)) {
-                    pq.remove(room.memory.spawnQ);
-                    console.log(spawn.name + ' is spawning ' + task.role + ' to room' + task.home);
+                if(task != undefined) {
+                    if(task !=roleSpawn.run(spawns[spawnName], task.role, task.home, task.work)) {
+                        pq.remove(room.memory.spawnQ);
+                        console.log(spawn.name + ' is spawning ' + task.role + ' to room' + task.home);
+                    }
+                }
+                else {
+                    break;
                 }
             }
         }

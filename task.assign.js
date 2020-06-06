@@ -3,15 +3,17 @@ const pq = require('priority_queue');
 const taskAssign = {
     run: function() {
         for(let task; (task = pq.top(global.sources)) != undefined; ) {
-            let host = Game.getObjectById(task.hostID), creep = host.pos.findClosestByPath(host.room.empty);
+            let host = Game.getObjectById(task.hostID), empty = host.room.empty, creep = host.pos.findClosestByPath(empty);
             pq.remove(global.sources);
             if(creep != null) {
-                creep.memory.reserved = Math.min(creep.store.getFreeCaapcity(RESOURCE_ENERGY), -task.pri);
+                creep.memory.reserved = Math.min(creep.store.getFreeCapacity(RESOURCE_ENERGY), -task.pri);
                 creep.memory.targetID = host.id;
                 creep.memory.state = 'get';
-                target.memory.reserved += creep.memory.reserved;
-                delete host.room.empty[creep.name];
-                if(task.pri + creep.memory.reserved < 100) {
+                host.memory.reserved += creep.memory.reserved;
+                empty[empty.indexOf(creep)] = empty[empty.length - 1];
+                empty.pop();
+                console.log(host.room.empty);
+                if(task.pri + creep.memory.reserved < -100) {
                     pq.insert(global.sources, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
@@ -26,8 +28,9 @@ const taskAssign = {
                 creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], -task.pri);
                 creep.memory.targetID = host.id;
                 creep.memory.state = 'give';
-                target.memory.reserved += creep.memory.reserved;
-                delete host.room.carry[creep.name];
+                host.memory.reserved += creep.memory.reserved;
+                empty[empty.indexOf(creep)] = empty[empty.length - 1];
+                empty.pop();
                 if(task.pri + creep.memory.reserved < 0) {
                     pq.insert(global.collect, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
