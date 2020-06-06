@@ -4,7 +4,7 @@ const workJack = require('work.jack');
 const workUpgrade = require('work.upgrade');
 
 function check(creep) {
-	let sum = creep.memory.reserved - creep.store.getFreeCapacoty(RESOURCE_ENERGY);
+	let sum = creep.memory.reserved - creep.store.getFreeCapacity(RESOURCE_ENERGY);
 	if(sum < 0) {
 		pq.insert(global.collect, {time: 2, pri: sum, hostID: creep.id});
 	}

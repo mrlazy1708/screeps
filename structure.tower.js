@@ -17,7 +17,7 @@ const structureTower = {
         }
 
         if(tower.memory.state == 'fill') {
-            let sum = tower.memory.reserved - tower.store.getFreeCapacoty(RESOURCE_ENERGY);
+            let sum = tower.memory.reserved - tower.store.getFreeCapacity(RESOURCE_ENERGY);
             pq.insert(global.collect, {time: 2, pri: sum, hostID: tower.id});
         }
 
