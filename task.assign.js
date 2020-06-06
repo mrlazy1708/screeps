@@ -6,7 +6,7 @@ const taskAssign = {
             let host = Game.getObjectById(task.hostID), empty = host.room.empty, creep = host.pos.findClosestByPath(empty);
             pq.remove(global.sources);
             if(creep != null) {
-                creep.memory.reserved = Math.min(creep.store.getFreeCapacity(RESOURCE_ENERGY), -task.pri);
+                creep.memory.reserved = Math.min(creep.store.getCapacity(RESOURCE_ENERGY) - creep.store[RESOURCE_ENERGY], -task.pri);
                 creep.memory.targetID = host.id;
                 creep.memory.state = 'get';
                 host.memory.reserved += creep.memory.reserved;
