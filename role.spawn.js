@@ -1,6 +1,6 @@
 const roleSpawn = {
     run: function(spawn, _role, _home, _work) {
-        const capacity = 300 + spawn.room.memory.nExtension * EXTENSION_ENERGY_CAPACITY(spawn.room.controller.level);
+        const capacity = 300 + spawn.room.memory.nExtension * EXTENSION_ENERGY_CAPACITY[spawn.room.controller.level];
         if(_role == 'courier') {
         	let body = [CARRY, CARRY, MOVE];
         	return spawn.spawnCreep(body, 'lazyCourier_' + Game.time, {memory: {role: _role, home: _home, state: 'travel', reserved: 0}});
