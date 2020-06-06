@@ -1,15 +1,19 @@
 const taskExamine = {
     run: function(room) {
-        room.memory.nExtension = 0;
-        room.memory.nContainer = 0;
-        const structures = room.find(FIND_MY_STRUCTURES);
+        const structures = room.find(FIND_STRUCTURES);
+        Memory.containers = [];
         for(let index in structures) {
             const structure = structures[index];
             if(structure.structureType == STRUCTURE_EXTENSION) {
-                room.memory.nExtension++;
+                if(structure.memory.reserved = undefined) {
+                    structure.memory.reserved = 0;
+                }
             }
             if(structure.structureType == STRUCTURE_CONTAINER) {
-                room.memory.nContainer++;
+                if(structure.memory.reserved == undefined) {
+                    structure.memory.reserved = 0;
+                }
+                Memory.containers.push(structure.id);
             }
         }
     }

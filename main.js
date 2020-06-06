@@ -19,5 +19,6 @@ module.exports.loop = function () {
 		taskSpawn.run();
 		taskAssign.run();
 		taskReport.run();
+		taskExamine.run();
 	// });
 }
