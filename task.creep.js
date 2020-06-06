@@ -7,7 +7,7 @@ const taskCreep = {
         for(let name in Memory.creeps) {
             let creep = Game.creeps[name];
             if(creep != null) {
-                if(creep.painc != Game.time) {
+                if(creep.memory.painc != Game.time) {
                     if(creep.memory.state == 'travel') {
                         roleTraveler.run(creep);
                     }

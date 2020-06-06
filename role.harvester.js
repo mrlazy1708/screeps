@@ -25,7 +25,7 @@ const roleHarvester = {
                     creep.say('🎯');
                 }
                 else {
-                    Memory.task_spawn.insert({pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', .dest: creep.room.name});
+                    Memory.task_spawn.insert({pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', dest: creep.room.name});
                     creep.memory.report = true;
                     creep.memory.state = 'work';
                 }
