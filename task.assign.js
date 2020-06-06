@@ -30,7 +30,7 @@ const taskAssign = {
                 host.memory.reserved += creep.memory.reserved;
                 carry[carry.indexOf(creep)] = carry[carry.length - 1];
                 carry.pop();
-                if(task.pri + creep.memory.reserved < 0) {
+                if(task.pri + creep.memory.reserved < -100) {
                     pq.insert(global.collect, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
