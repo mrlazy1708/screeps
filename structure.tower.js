@@ -1,3 +1,5 @@
+const pq = require('priority_queue');
+
 const structureTower = {
     run: function(tower) {
         if(tower.memory.reserved == undefined) {
@@ -19,7 +21,7 @@ const structureTower = {
 
         if(tower.memory.state == 'fill') {
             let sum = tower.memory.reserved - tower.store.getFreeCapacoty(RESOURCE_ENERGY);
-            global.collect.insert({time: 1, pri: sum, hostID: tower.id});
+            pq.insert(global.collect, {time: 1, pri: sum, hostID: tower.id});
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {

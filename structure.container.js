@@ -1,3 +1,5 @@
+const pq = require('priority_queue');
+
 const structureContainer = {
     run: function(container) {
         if(container.memory.reserved == undefined) {
@@ -5,7 +7,7 @@ const structureContainer = {
         }
         let sum = container.memory.reserved - container.store[RESOURCE_ENERGY];
         if(sum < -100) {
-            global.sources.insert({time: 1, pri: sum, hostID: container.id});
+            pq.insert(global.sources, {time: 1, pri: sum, hostID: container.id});
         }
     }
 };

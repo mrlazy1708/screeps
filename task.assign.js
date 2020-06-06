@@ -1,8 +1,10 @@
+const pq = require('priority_queue');
+
 const taskAssign = {
     run: function() {
-        for(let task; (task = global.sources.top()) != undefined; ) {
+        for(let task; (task = pq.top(global.sources)) != undefined; ) {
             let host = Game.getObjectById(task.hostID), creep = host.pos.findClosestByPath(host.room.empty);
-            global.sources.remove();
+            pq.remove(global.sources);
             if(creep != null) {
                 creep.memory.reserved = Math.min(creep.store.getFreeCaapcity(RESOURCE_ENERGY), -task.pri);
                 creep.memory.targetID = host.id;
@@ -10,16 +12,16 @@ const taskAssign = {
                 target.memory.reserved += creep.memory.reserved;
                 delete host.room.empty[creep.name];
                 if(task.pri + creep.memory.reserved < 100) {
-                    global.sources.insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
+                    pq.insert(global.sources, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
             else {
                 break;
             }
         }
-        for(let task; (task = global.collect.top()) != undefined; ) {
+        for(let task; (task = pq.top(global.collect)) != undefined; ) {
             let host = Game.getObjectById(task.hostID), creep = host.pos.findClosestByPath(host.room.carry);
-            global.collect.remove();
+            pq.remove(global.collect);
             if(creep != null) {
                 creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], -task.pri);
                 creep.memory.targetID = host.id;
@@ -27,7 +29,7 @@ const taskAssign = {
                 target.memory.reserved += creep.memory.reserved;
                 delete host.room.carry[creep.name];
                 if(task.pri + creep.memory.reserved < 0) {
-                    global.collect.insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
+                    pq.insert(global.collect, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
             }
             else {

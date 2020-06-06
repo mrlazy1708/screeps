@@ -1,3 +1,5 @@
+const pq = require('priority_queue');
+
 const roleHarvester = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
@@ -25,7 +27,7 @@ const roleHarvester = {
                     creep.say('🎯');
                 }
                 else {
-                    Memory.task_spawn.insert({pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', dest: creep.room.name});
+                    pq.insert(Memory.task_spawn, {pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', dest: creep.room.name});
                     creep.memory.report = true;
                     creep.memory.state = 'work';
                 }
