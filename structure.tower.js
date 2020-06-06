@@ -2,9 +2,6 @@ const pq = require('priority_queue');
 
 const structureTower = {
     run: function(tower) {
-        if(tower.memory.reserved == undefined) {
-            tower.memory.reserved = 0;
-        }
         if(tower.memory.state == 'fill') {
             if(tower.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
                 tower.memory.state = 'full';

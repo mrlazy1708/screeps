@@ -6,7 +6,7 @@ const taskExamine = {
             for(let index in structures) {
                 const structure = structures[index];
                 if(structure.structureType == STRUCTURE_EXTENSION) {
-                    if(structure.memory.reserved = undefined) {
+                    if(structure.memory.reserved == undefined) {
                         structure.memory.reserved = 0;
                     }
                 }

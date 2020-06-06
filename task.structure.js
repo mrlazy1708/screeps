@@ -9,10 +9,10 @@ const taskStructure = {
             structureContainer.run(Game.getObjectById(Memory.containers[index]));
         }
         for(let id in structures[STRUCTURE_EXTENSION]) {
-            structureExtension.run(Game.structures[id]);
+            structureExtension.run(structures[STRUCTURE_EXTENSION][id]);
         }
         for(let id in structures[STRUCTURE_TOWER]) {
-            structureTower.run(Game.structures[id]);
+            structureTower.run(structures[STRUCTURE_EXTENSION][id]);
         }
     }
 };
