@@ -4,6 +4,7 @@ const taskRoom = {
             let room = Game.rooms[name], enemys = room.find(FIND_HOSTILE_CREEPS);
             room.empty = [];
             room.carry = [];
+            room.idleSpawns = [];
             if(room.memory.spawnQ == undefined) {
                 room.memory.spawnQ = [0];
             }
