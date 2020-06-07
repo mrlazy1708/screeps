@@ -14,7 +14,7 @@ const taskDesign = require('task.design');
 
 module.exports.loop = function () {
 	// profiler.wrap(function() {
-		taskDesign.run();
+		taskDesign.run(Game.rooms['sim']);
 		// taskInit.run();
 		// taskRoom.run();
 		// taskStructure.run();
