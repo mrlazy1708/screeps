@@ -1,9 +1,7 @@
 const taskInit = {
     run: function() {
         if(Memory.task == undefined) {
-            Memory.task.spawn = [0];
-            Memory.task.sources = [0];
-            Memory.task.collect = [0];
+            Memory.task = {spawn: [0], sources: [0], collect: [0]};
         }
 
         Array.prototype.Cmp = function(i, j) {
