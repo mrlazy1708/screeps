@@ -3,7 +3,7 @@ const roleSpawn = require('role.spawn');
 const taskSpawn = {
     run:function() {
         for(let task; (task = Memory.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
-            let index = mFind(spawns, task.pos);
+            let index = task.pos.Find(spawns);
             if(index != null) {
                 let spawn = spawns[index];
                 nDelete(spawns, index);

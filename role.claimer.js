@@ -1,4 +1,4 @@
- const roleClaimer = {
+const roleClaimer = {
     run: function(creep) {
 
         if(creep.memory.state == 'get') {
