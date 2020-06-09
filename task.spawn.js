@@ -1,7 +1,7 @@
 const roleSpawn = require('role.spawn');
 
 const taskSpawn = {
-    run:function() {
+    run: function() {
         for(let task; (task = Memory.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
             let index = task.pos.Find(spawns);
             if(index != null) {
@@ -15,9 +15,8 @@ const taskSpawn = {
 
         for(let name in Game.spawns) {
             let spawn = Game.spawns[name] {
-                if(roleSpawn.run(spawn) == OK) {
-                    spawn.memory.task = null;
-                }
+            if(!spawn.spawning && roleSpawn.run(spawn) == OK) {
+                spawn.memory.task = null;
             }
         }
 	}
