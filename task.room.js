@@ -2,12 +2,6 @@ const taskRoom = {
     run: function() {
         for(let name in Game.rooms) {
             let room = Game.rooms[name], enemys = room.find(FIND_HOSTILE_CREEPS);
-            room.empty = [];
-            room.carry = [];
-            room.idleSpawns = [];
-            if(room.memory.spawnQ == undefined) {
-                room.memory.spawnQ = [0];
-            }
             if(enemys.length) {
                 if(!room.memory.invaded) {
                     room.memory.invaded = true;

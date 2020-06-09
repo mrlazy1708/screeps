@@ -1,11 +1,10 @@
-const pq = require('priority_queue');
-
 const structureContainer = {
     run: function(container) {
-        let sum = container.memory.reserved - container.store[RESOURCE_ENERGY];
-        if(sum < -100) {
-            pq.insert(global.sources, {time: 1, pri: sum, hostID: container.id});
-        }
+    	if(!container.memory.wait && container.store[RESOURCE_ENERGY] > container.memory.reserved) {
+			container.memory.wait = true;
+            Memory.task.sources.Insert({time: Game.time*2 - container.memory.time, pri: 2, hostID: container.id});
+            contianer.memory.time = Game.time;
+    	}
     }
 };
 

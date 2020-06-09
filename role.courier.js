@@ -1,9 +1,10 @@
 const roleCourier = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
-            creep.room.empty.push(creep);
+            Memory.empty.push(creep.id);
             creep.say('💤');
         }
+
         if(creep.memory.state == 'get') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -34,10 +35,12 @@ const roleCourier = {
                 creep.say('💤');
             }
         }
+
         if(creep.memory.state == 'carry') {
-        	creep.room.carry.push(creep);
+        	Memory.carry.push(creep.id);
             creep.say('📦');
         }
+
         if(creep.memory.state == 'give') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {

@@ -1,10 +1,9 @@
-const pq = require('priority_queue');
-
 const structureExtension = {
     run: function(extension) {
-        let sum = extension.memory.reserved - extension.store.getFreeCapacity(RESOURCE_ENERGY);
-        if(sum < 0) {
-            pq.insert(global.collect, {time: 1, pri: sum, hostID: extension.id});
+        if(!extension.memory.wait && extension.store.getFreeCapacity[RESOURCE_ENERGY] > extension.memory.reserved) {
+            extension.memory.wait = true;
+            Memory.task.collect.Insert({time: Game.time*2 - extension.memory.time, pri: 2, hostID: extension.id});
+            extension.memory.time = Game.time;
         }
     }
 };

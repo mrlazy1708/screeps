@@ -8,20 +8,17 @@ const taskRoom = require('task.room');
 const taskSpawn = require('task.spawn');
 const taskStructure = require('task.structure');
 
-const taskDesign = require('task.design');
-
 //profiler.enable();
 
 module.exports.loop = function () {
 	// profiler.wrap(function() {
-		taskDesign.run(Game.rooms['sim']);
-		// taskInit.run();
-		// taskRoom.run();
-		// taskStructure.run();
-		// taskCreep.run();
-		// taskSpawn.run();
-		// taskAssign.run();
-		// taskReport.run();
-		// taskExamine.run();
+		taskInit.run();
+		taskRoom.run();
+		taskAssign.run();
+		taskCreep.run();
+		taskSpawn.run();
+		taskStructure.run();
 	// });
+	taskReport.run();
+	taskExamine.run();
 }

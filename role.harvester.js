@@ -1,5 +1,3 @@
-const pq = require('priority_queue');
-
 const roleHarvester = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
@@ -19,6 +17,7 @@ const roleHarvester = {
                 creep.say('💤');
             }
         }
+
         if(creep.memory.state == 'arrive') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -27,7 +26,9 @@ const roleHarvester = {
                     creep.say('🎯');
                 }
                 else {
-                    pq.insert(Memory.task_spawn, {pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', dest: creep.room.name});
+                    let nWORK = _.fliter(creep.body, (part)=>{return part == WORK;}).length;
+                    target.memory.rate = nWORK * 2;
+                    Memory.task.spawn.Insert({pri: 2, time: Game.time + 2 * creep.ticksToLive - 1500, task: 'spawn', role: 'harvester', dest: creep.room.name});
                     creep.memory.report = true;
                     creep.memory.state = 'work';
                 }
@@ -37,6 +38,7 @@ const roleHarvester = {
                 creep.say('💤');
             }
         }
+        
         if(creep.memory.state == 'work') {
             if(creep.harvest(Game.getObjectById(creep.memory.sourceID)) != ERR_NOT_IN_RANGE) {
                 creep.say('🚨️️');

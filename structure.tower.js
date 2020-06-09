@@ -1,24 +1,9 @@
-const pq = require('priority_queue');
-
 const structureTower = {
     run: function(tower) {
-        if(tower.memory.state == 'fill') {
-            if(tower.store.getFreeCapacity(RESOURCE_ENERGY) == 0) {
-                tower.memory.state = 'full';
-            }
-        }
-        else if(tower.memory.state == 'full') {
-            if(tower.store.getFreeCapacity(RESOURCE_ENERGY) * 2 >= tower.store.getCapacity(RESOURCE_ENERGY)) {
-                tower.memory.state = 'fill';
-            }
-        }
-        else {
-            tower.memory.state = 'fill';
-        }
-
-        if(tower.memory.state == 'fill') {
-            let sum = tower.memory.reserved - tower.store.getFreeCapacity(RESOURCE_ENERGY);
-            pq.insert(global.collect, {time: 2, pri: sum, hostID: tower.id});
+        if(!tower.memory.wait && tower.store.getFreeCapacity[RESOURCE_ENERGY] > tower.memory.reserved) {
+            tower.memory.wait = true;
+            Memory.task.collect.Insert({time: Game.time*2 - tower.memory.time, pri: 2, hostID: tower.id});
+            tower.memory.time = Game.time;
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {

@@ -1,43 +1,37 @@
-const pq = require('priority_queue');
+function assignTrans(tasks, creeps, val) {
+    for(let index in creeps)
+        if(Game.getObjectById(creeps[index] == null)
+            creeps.Delete(index);
+
+    for(let task; (task = tasks.Top()) != undefined && task.time <= Game.time; ) {
+        let host = Game.getObjectById(task.hostID);
+        if(host != undefined){ 
+            let index = mFind(creeps, host.pos);
+            if(index != null) {
+                let creep = Game.getObjectById(creeps[index]);
+                mDelete(creeps, index);
+                tasks.Pop();
+                if(val(creep) < -task.pri) {
+                    creep.memory.reserved = val(creep);
+                    tasks.Insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
+                }
+                else {
+                    creep.memory.reserved = -task.pri;
+                    host.memory.wait = false;
+                }
+                host.memory.reserved += creep.memory.reserved;
+                creep.memory.targetID = host.id;
+                creep.memory.state = 'get';
+            }
+            else return;
+        }
+    }
+}
 
 const taskAssign = {
     run: function() {
-        for(let task; (task = pq.top(global.sources)) != undefined; ) {
-            let host = Game.getObjectById(task.hostID), empty = host.room.empty, creep = host.pos.findClosestByPath(empty);
-            pq.remove(global.sources);
-            if(creep != null) {
-                creep.memory.reserved = Math.min(creep.store.getCapacity(RESOURCE_ENERGY) - creep.store[RESOURCE_ENERGY], -task.pri);
-                creep.memory.targetID = host.id;
-                creep.memory.state = 'get';
-                host.memory.reserved += creep.memory.reserved;
-                empty[empty.indexOf(creep)] = empty[empty.length - 1];
-                empty.pop();
-                if(task.pri + creep.memory.reserved < -100) {
-                    pq.insert(global.sources, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
-                }
-            }
-            else {
-                break;
-            }
-        }
-        for(let task; (task = pq.top(global.collect)) != undefined; ) {
-            let host = Game.getObjectById(task.hostID), carry = host.room.carry, creep = host.pos.findClosestByPath(carry);
-            pq.remove(global.collect);
-            if(creep != null) {
-                creep.memory.reserved = Math.min(creep.store[RESOURCE_ENERGY], -task.pri);
-                creep.memory.targetID = host.id;
-                creep.memory.state = 'give';
-                host.memory.reserved += creep.memory.reserved;
-                carry[carry.indexOf(creep)] = carry[carry.length - 1];
-                carry.pop();
-                if(task.pri + creep.memory.reserved < -100) {
-                    pq.insert(global.collect, {time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
-                }
-            }
-            else {
-                break;
-            }
-        }
+        assignTrans(Memory.task.sources, Memory.empty, (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
+        assignTrans(Memory.task.collect, Memory.carry, (creep)=>{return creep.store[RESOURCE_ENERGY];});
     }
 };
 
