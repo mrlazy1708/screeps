@@ -15,10 +15,10 @@ module.exports.loop = function () {
 		taskInit.run();
 	taskExamine.run();
 		taskRoom.run();
-		taskAssign.run();
 		taskCreep.run();
 		taskSpawn.run();
 		taskStructure.run();
+		taskAssign.run();
 	// });
 	taskReport.run();
 }

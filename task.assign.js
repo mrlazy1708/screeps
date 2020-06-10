@@ -22,7 +22,7 @@ function assignTrans(tasks, creeps, state, val) {
                 host.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = host.id;
                 creep.memory.state = state;
-                console.log('#'+creep.id+' will '+state+' '+creep.memory.reserved+' energy '+state=='get'?'from #':'to #'+host.id);
+                console.log('#'+creep.id+' will '+(state=='get'?'fetch ':'deliver ')+creep.memory.reserved+' energy '+(state=='get'?'from #':'to #')+host.id);
             }
             else return;
         }
