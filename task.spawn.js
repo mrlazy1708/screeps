@@ -14,7 +14,7 @@ const taskSpawn = {
         }
 
         for(let name in Game.spawns) {
-            let spawn = Game.spawns[name] {
+            let spawn = Game.spawns[name];
             if(!spawn.spawning && roleSpawn.run(spawn) == OK) {
                 spawn.memory.task = null;
             }

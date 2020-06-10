@@ -5,7 +5,7 @@ const structureTower = require('structure.tower');
 const taskStructure = {
     run: function() {
         let structures = _.groupBy(Game.structures, (structure)=>{return structure.structureType;});
-        for(let index in Memory.containers) {
+        for(let index = 0; index < Memory.containers.length; index++) {
             structureContainer.run(Game.getObjectById(Memory.containers[index]));
         }
         for(let id in structures[STRUCTURE_EXTENSION]) {
