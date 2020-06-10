@@ -6,7 +6,7 @@ function assignTrans(tasks, creeps, val) {
     for(let task; (task = tasks.Top()) != undefined && task.time <= Game.time; ) {
         let host = Game.getObjectById(task.hostID);
         if(host != undefined){ 
-            let index = host.pos.Find(creep);
+            let index = host.pos.Find(creeps);
             if(index != null) {
                 let creep = Game.getObjectById(creeps[index]);
                 mDelete(creeps, index);
