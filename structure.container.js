@@ -3,7 +3,7 @@ const structureContainer = {
     	if(!container.memory.wait && container.store[RESOURCE_ENERGY] > container.memory.reserved) {
 			container.memory.wait = true;
             Memory.task.sources.Push({time: Game.time*2 - container.memory.time, pri: 2, hostID: container.id});
-            contianer.memory.time = Game.time;
+            container.memory.time = Game.time;
     	}
     }
 };
