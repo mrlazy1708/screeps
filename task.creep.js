@@ -29,7 +29,7 @@ const taskCreep = {
                 const _creep = Memory.creeps[name];
                 if(_creep.role == 'courier') {
                     let _target = Game.getObjectById(_creep.targetID);
-                    if(_target != null && _creep.reserved != 0 ) {
+                    if(_target != null) {
                         _target.memory.reserved -= _creep.reserved;
                     }
                 }

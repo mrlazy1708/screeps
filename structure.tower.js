@@ -1,12 +1,8 @@
 const structureTower = {
     run: function(tower) {
-        if(!tower.memory.wait) {
-            let sum = tower.memory.reserved - tower.store.getFreeCapacity(RESOURCE_ENERGY);
-            if(sum < 0) {
-                tower.memory.wait = true;
-                Memory.task.collect.Push({time: Game.time*2 - tower.memory.time, pri: sum, hostID: tower.id});
-                tower.memory.time = Game.time;
-            }
+        let sum = tower.memory.reserved - tower.store.getFreeCapacity(RESOURCE_ENERGY);
+        if(sum < 0) {
+            global.task.collect.Push({time: 2, pri: sum, hostID: tower.id});
         }
 
         if(tower.store[RESOURCE_ENERGY] >= 10) {

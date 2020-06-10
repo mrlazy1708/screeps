@@ -1,9 +1,11 @@
-function assignTrans(tasks, creeps, state, val) {
-    for(let index = 0; index < creeps.length; index++)
-        if(Game.getObjectById(creeps[index]) == null)
+function assignTrans(tasks, creeps, state) {
+    for(let index = 0; index < creeps.length; index++) {
+        if(Game.getObjectById(creeps[index]) == null) {
             creeps.Delete(index);
+        }
+    }
 
-    for(let task; (task = tasks.Top()) != undefined && task.time <= Game.time; ) {
+    for(let task; (task = tasks.Top()) != undefined; ) {
         let host = Game.getObjectById(task.hostID);
         if(host != undefined) {
             let index = host.pos.Find(creeps);
@@ -11,14 +13,8 @@ function assignTrans(tasks, creeps, state, val) {
                 let creep = Game.getObjectById(creeps[index]);
                 creeps.Delete(index);
                 tasks.Pop();
-                if(val(creep) < -task.pri) {
-                    creep.memory.reserved = val(creep);
-                    tasks.Push({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
-                }
-                else {
-                    creep.memory.reserved = -task.pri;
-                    host.memory.wait = false;
-                }
+                creep.memory.reserved = state == 'get'?creep.store.getFreeCapacity(RESOURCE_ENERGY):creep.store[RESOURCE_ENERGY];
+                tasks.Push({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 host.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = host.id;
                 creep.memory.state = state;
@@ -31,8 +27,8 @@ function assignTrans(tasks, creeps, state, val) {
 
 const taskAssign = {
     run: function() {
-        assignTrans(Memory.task.sources, Memory.emptyCreep, 'get', (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
-        assignTrans(Memory.task.collect, Memory.carryCreep, 'give', (creep)=>{return creep.store[RESOURCE_ENERGY];});
+        assignTrans(global.task.sources, global.courier.empty, 'get');
+        assignTrans(global.task.collect, global.courier.carry, 'give');
     }
 };
 

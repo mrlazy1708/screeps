@@ -3,13 +3,13 @@ const roleSpawn = require('role.spawn');
 const taskSpawn = {
     run: function() {
         let idleSpawn = _.filter(Game.spawns, (spawn)=>{return !spawn.spawning});
-        for(let task; (task = Memory.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
+        for(let task; (task = global.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
             let index = task.pos.Find(idleSpawn);
             if(index != null) {
                 let spawn = Game.getObjectById(idleSpawn[index]);
                 idleSpawn.Delete(index);
                 if(spawn) {
-                    Memory.task.spawn.Pop();
+                    global.task.spawn.Pop();
                     spawn.memory.task = task.disc;
                 }
             }

@@ -9,14 +9,6 @@ const taskExamine = {
                 if(structure.memory.reserved == undefined) {
                     structure.memory.reserved = 0;
                 }
-                
-                if(structure.memory.time == undefined) {
-                    structure.memory.time = Game.time;
-                }
-
-                if(structure.memory.wait == undefined) {
-                    structure.memory.wait = false;
-                }
 
                 if(structure.structureType == STRUCTURE_EXTENSION) {
                     room.memory.nExtension++;

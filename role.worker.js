@@ -3,18 +3,15 @@ const workJack = require('work.jack');
 const workUpgrade = require('work.upgrade');
 
 function check(creep) {
-    if(!creep.memory.wait) {
-        let sum = creep.memory.reserved - creep.store.getFreeCapacity(RESOURCE_ENERGY);
-        if(sum < 0) {
-            creep.memory.wait = true;
-            Memory.task.collect.Push({time: Game.time*2 - creep.memory.time, pri: sum, hostID: creep.id});
-            creep.memory.time = Game.time;
-        }
+    let sum = creep.memory.reserved - creep.store.getFreeCapacity(RESOURCE_ENERGY);
+    if(sum < 0) {
+        global.task.collect.Push({time: 3, pri: sum, hostID: creep.id});
     }
 }
 
 const roleWorker = {
     run: function(creep) {
+        creep.sample();
         if(creep.memory.work == 'build') {
             workBuild.run(creep);
             check(creep);

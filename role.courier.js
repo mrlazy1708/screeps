@@ -1,12 +1,12 @@
 const roleCourier = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
-            Memory.emptyCreep.push(creep.id);
+            global.courier.empty.push(creep.id);
             creep.say('💤');
         }
 
         if(creep.memory.state == 'carry') {
-            Memory.carryCreep.push(creep.id);
+            global.courier.carry.push(creep.id);
             creep.say('📦');
         }
 
@@ -14,16 +14,17 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store[RESOURCE_ENERGY] >= creep.memory.reserved) {
-                        if(creep.store.getFreeCapacity(RESOURCE_ENERGY) <= creep.memory.reserved) {
+                    if(target.store[RESOURCE_ENERGY] >= creep.memory.reserved || target.memory.rate < 3.0) {
+                        creep.withdraw(target, RESOURCE_ENERGY);
+                        if(creep.store.getFreeCapacity(RESOURCE_ENERGY) <= target.store[RESOURCE_ENERGY]) {
                             creep.memory.state = 'carry';
                         }
                         else {
                             creep.memory.state = 'idle';
                         }
                         target.memory.reserved -= creep.memory.reserved;
-                        creep.memory.reserved = 0;
-                        creep.withdraw(target, RESOURCE_ENERGY);
+                        creep.memory.targetID = null;
+                        creep.say('✅︎️');
                     }
                     else {
                         creep.say('⏳');
@@ -44,16 +45,16 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved) {
-                        if(creep.store[RESOURCE_ENERGY] <= creep.memory.reserved) {
+                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.rate > -3.0) {
+                        creep.transfer(target, RESOURCE_ENERGY);
+                        if(creep.store[RESOURCE_ENERGY] <= target.store.getFreeCapacity(RESOURCE_ENERGY)) {
                             creep.memory.state = 'idle';
                         }
                         else {
                             creep.memory.state = 'carry';
                         }
                         target.memory.reserved -= creep.memory.reserved;
-                        creep.memory.reserved = 0;
-                        creep.transfer(target, RESOURCE_ENERGY);
+                        creep.memory.targetID = null;
                         creep.say('✅︎️');
                     }
                     else {

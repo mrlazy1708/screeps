@@ -1,16 +1,13 @@
 const taskInit = {
     run: function() {
-        if(Memory.task == undefined) {
-            Memory.task = {spawn: [0], sources: [0], collect: [0]};
-            Memory.emptyCreep = [];
-            Memory.carryCreep = [];
-        }
+        global.task = {sources: [0], collect: [0], spawn: [0]};
+        global.courier = {empty: [], carry: []};
 
         Array.prototype.Cmp = function(i, j) {
             if(i.time == j.time)return i.pri < j.pri;
             return i.time < j.time;
         }
-        Array.prototype.Top =  function() {
+        Array.prototype.Top = function() {
             return this[1];
         }
         Array.prototype.Push = function(value) {
@@ -69,6 +66,10 @@ const taskInit = {
                 Memory.sources[this.id] = value;
             }
         });*/
+        Object.prototype.sample = function() {
+            this.memory.rate = this.store[RESOURCE_ENERGY] - this.memory.store + this.memory.rate / 2.0;
+            this.memory.store = this.store[RESOURCE_ENERGY];
+        }
         Object.defineProperty(Structure.prototype, 'memory', {
             configurable: true,
             get: function() {
