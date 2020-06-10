@@ -6,12 +6,13 @@ const taskStructure = {
     run: function() {
         for(let id in Game.structures) {
             let structure = Game.structures[id];
-            structure.sample();
             if(structure.structureType == STRUCTURE_EXTENSION) {
+                structure.sample();
                 structureExtension.run(structure);
             }
 
             if(structure.structureType == STRUCTURE_TOWER) {
+                structure.sample();
                 structureTower.run(structure);
             }
         }

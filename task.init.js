@@ -66,7 +66,11 @@ const taskInit = {
                 Memory.sources[this.id] = value;
             }
         });*/
-        Object.prototype.sample = function() {
+        Creep.prototype.sample = function() {
+            this.memory.rate = this.store[RESOURCE_ENERGY] - this.memory.store + this.memory.rate / 2.0;
+            this.memory.store = this.store[RESOURCE_ENERGY];
+        }
+        Structure.prototype.sample = function() {
             this.memory.rate = this.store[RESOURCE_ENERGY] - this.memory.store + this.memory.rate / 2.0;
             this.memory.store = this.store[RESOURCE_ENERGY];
         }
