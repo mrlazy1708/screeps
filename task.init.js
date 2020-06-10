@@ -31,6 +31,7 @@ const taskInit = {
         }
 
         RoomPosition.prototype.Range = function(pos) {
+            if(this.roomName == 'sim')return Math.max(Math.abs(this.x - pos.x), Math.abs(this.y - pos.y));
             let u1 = /^([WE])([0-9]+)([NS])([0-9]+)$/.exec(this.roomName), u2 = /^([WE])([0-9]+)([NS])([0-9]+)$/.exec(pos.roomName);
             return Math.max(
                 Math.abs( (this.x+(Number(u1[2])+1) * (u1[1]=='W'?-50:50)) - (pos.x+(1+Number(u2[2])) * (u2[1]=='W'?-50:50)) ),
@@ -40,7 +41,7 @@ const taskInit = {
         RoomPosition.prototype.Find = function(arr) {
             let min = 1e9, index;
             for(let i = 0; i < arr.length; i++) {
-                let host = Game.getObjectById(arr[i].hostID);
+                let host = Game.getObjectById(arr[i]);
                 if(min > this.range(host.pos)) {
                     min = this.Range(host.pos);
                     index = i;
