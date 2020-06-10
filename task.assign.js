@@ -1,4 +1,4 @@
-function assignTrans(tasks, creeps, val) {
+function assignTrans(tasks, creeps, state, val) {
     for(let index = 0; index < creeps.length; index++)
         if(Game.getObjectById(creeps[index]) == null)
             creeps.Delete(index);
@@ -21,7 +21,7 @@ function assignTrans(tasks, creeps, val) {
                 }
                 host.memory.reserved += creep.memory.reserved;
                 creep.memory.targetID = host.id;
-                creep.memory.state = 'get';
+                creep.memory.state = state;
             }
             else return;
         }
@@ -30,8 +30,8 @@ function assignTrans(tasks, creeps, val) {
 
 const taskAssign = {
     run: function() {
-        assignTrans(Memory.task.sources, Memory.emptyCreep, (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
-        assignTrans(Memory.task.collect, Memory.carryCreep, (creep)=>{return creep.store[RESOURCE_ENERGY];});
+        assignTrans(Memory.task.sources, Memory.emptyCreep, 'get', (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
+        assignTrans(Memory.task.collect, Memory.carryCreep, 'give', (creep)=>{return creep.store[RESOURCE_ENERGY];});
     }
 };
 
