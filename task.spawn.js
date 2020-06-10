@@ -8,7 +8,7 @@ const taskSpawn = {
                 let spawn = spawns[index];
                 nDelete(spawns, index);
                 Memory.task.spawn.Pop();
-                spawn.memory.disc = task.disc;
+                spawn.memory.task = task.disc;
             }
             else break;
         }

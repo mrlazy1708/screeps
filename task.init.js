@@ -11,17 +11,17 @@ const taskInit = {
         Array.prototype.Top =  function() {
             return this[1];
         }
-        Array.prototype.Push = function(value){
+        Array.prototype.Push = function(value) {
             this.push(value);
             for(let i=this.length-1;i>1&&this.Cmp(this[i],this[i>>1]);i>>=1)[this[i],this[i>>1]]=[this[i>>1],this[i]];
         }
-        Array.prototype.Pop = function(){
+        Array.prototype.Pop = function() {
             if(this.length>2)this[1]=this.pop();
             else this.pop();
             for(let i=1;i<<1<this.length-1&&!this.Cmp(this[i],this.Cmp(this[i<<1],this[i<<1|1])?this[i<<1]:this[i<<1|1]);)
                 if(this.Cmp(this[i<<1],this[i<<1|1]))[this[i],this[i<<1]]=[this[i<<1],this[i]],i=i<<1;
                 else [this[i],this[i<<1|1]]=[this[i<<1|1],this[i]],i=i<<1|1;
-            if(this.length&1 && this.Cmp(this[this.length-1],this[this.length>>1]))[this[this.length-1],this[this.length>>1]]=[this[this.length>>1],this[this.length-1]];
+            if(this.length&1&&this.Cmp(this[this.length-1],this[this.length>>1]))[this[this.length-1],this[this.length>>1]]=[this[this.length>>1],this[this.length-1]];
         }
         Array.prototype.Delete = function(index) {
             this[index] = this[this.length-1];
@@ -37,7 +37,7 @@ const taskInit = {
         }
         RoomPosition.prototype.Find = function(arr) {
             let min = 1e9, index;
-            for(let i in arr) {
+            for(let i = 0; i < arr.length; i++) {
                 let host = Game.getObjectById(arr[i].hostID);
                 if(min > this.range(host.pos)) {
                     min = this.Range(host.pos);
