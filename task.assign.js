@@ -30,8 +30,8 @@ function assignTrans(tasks, creeps, val) {
 
 const taskAssign = {
     run: function() {
-        assignTrans(Memory.task.sources, Memory.empty, (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
-        assignTrans(Memory.task.collect, Memory.carry, (creep)=>{return creep.store[RESOURCE_ENERGY];});
+        assignTrans(Memory.task.sources, Memory.emptyCreep, (creep)=>{return creep.store.getFreeCapacity(RESOURCE_ENERGY);});
+        assignTrans(Memory.task.collect, Memory.carryCreep, (creep)=>{return creep.store[RESOURCE_ENERGY];});
     }
 };
 

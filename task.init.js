@@ -4,7 +4,6 @@ const taskInit = {
             Memory.task = {spawn: [0], sources: [0], collect: [0]};
             Memory.emptyCreep = [];
             Memory.carryCreep = [];
-            Memory.idleSpawn = [];
         }
 
         Array.prototype.Cmp = function(i, j) {
