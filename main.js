@@ -11,9 +11,9 @@ const taskStructure = require('task.structure');
 //profiler.enable();
 
 module.exports.loop = function () {
-	taskExamine.run();
 	// profiler.wrap(function() {
 		taskInit.run();
+	taskExamine.run();
 		taskRoom.run();
 		taskAssign.run();
 		taskCreep.run();
