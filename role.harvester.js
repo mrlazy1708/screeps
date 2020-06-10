@@ -28,7 +28,7 @@ const roleHarvester = {
                 else {
                     let nWORK = _.fliter(creep.body, (part)=>{return part == WORK;}).length;
                     target.memory.rate = nWORK * 2;
-                    Memory.task.spawn.Push({time: Game.time + 2 * creep.ticksToLive - 1500, pri: 2, disc: {role: 'harvester', home: creep.room.name});
+                    Memory.task.spawn.Push({time: Game.time + 2 * creep.ticksToLive - 1500, pri: 2, disc: {role: 'harvester', home: creep.room.name}});
                     creep.memory.report = true;
                     creep.memory.state = 'work';
                 }
