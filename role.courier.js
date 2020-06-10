@@ -1,12 +1,12 @@
 const roleCourier = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
-            Memory.empty.push(creep.id);
+            Memory.emptyCreep.push(creep.id);
             creep.say('💤');
         }
 
         if(creep.memory.state == 'carry') {
-            Memory.carry.push(creep.id);
+            Memory.carryCreep.push(creep.id);
             creep.say('📦');
         }
 
