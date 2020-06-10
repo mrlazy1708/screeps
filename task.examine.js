@@ -4,7 +4,7 @@ const taskExamine = {
         for(let name in Game.rooms) {
             let room = Game.rooms[name], structures = room.find(FIND_STRUCTURES);
             room.memory.nExtension = 0;
-            for(let index in structures) {
+            for(let index = 0; index < structures.length; index++) {
                 const structure = structures[index];
                 if(structure.structureType == STRUCTURE_EXTENSION) {
                     if(structure.memory.reserved == undefined) {

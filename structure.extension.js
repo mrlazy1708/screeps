@@ -1,10 +1,13 @@
 const structureExtension = {
     run: function(extension) {
-        if(!extension.memory.wait && extension.store.getFreeCapacity[RESOURCE_ENERGY] > extension.memory.reserved) {
-            extension.memory.wait = true;
-            Memory.task.collect.Push({time: Game.time*2 - extension.memory.time, pri: 2, hostID: extension.id});
-            extension.memory.time = Game.time;
-        }
+	    if(!extension.memory.wait) {
+	        let sum = extension.memory.reserved - extension.store.getFreeCapacity(RESOURCE_ENERGY);
+	        if(sum < 0) {
+	            extension.memory.wait = true;
+	            Memory.task.collect.Push({time: Game.time*2 - extension.memory.time, pri: sum, hostID: extension.id});
+	            extension.memory.time = Game.time;
+	        }
+	    }
     }
 };
 

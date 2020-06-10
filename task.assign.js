@@ -1,5 +1,5 @@
 function assignTrans(tasks, creeps, val) {
-    for(let index in creeps)
+    for(let index = 0; index < creeps.length; index++)
         if(Game.getObjectById(creeps[index]) == null)
             creeps.Delete(index);
 

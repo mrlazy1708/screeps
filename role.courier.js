@@ -5,6 +5,11 @@ const roleCourier = {
             creep.say('💤');
         }
 
+        if(creep.memory.state == 'carry') {
+            Memory.carry.push(creep.id);
+            creep.say('📦');
+        }
+
         if(creep.memory.state == 'get') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -17,7 +22,6 @@ const roleCourier = {
                             creep.memory.state = 'idle';
                         }
                         target.memory.reserved -= creep.memory.reserved;
-                        creep.store[RESOURCE_ENERGY] += creep.memory.reserved;
                         creep.memory.reserved = 0;
                         creep.withdraw(target, RESOURCE_ENERGY);
                     }
@@ -36,11 +40,6 @@ const roleCourier = {
             }
         }
 
-        if(creep.memory.state == 'carry') {
-        	Memory.carry.push(creep.id);
-            creep.say('📦');
-        }
-
         if(creep.memory.state == 'give') {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
@@ -53,7 +52,6 @@ const roleCourier = {
                             creep.memory.state = 'carry';
                         }
                         target.memory.reserved -= creep.memory.reserved;
-                        creep.store[RESOURCE_ENERGY] += creep.memory.reserved;
                         creep.memory.reserved = 0;
                         creep.transfer(target, RESOURCE_ENERGY);
                         creep.say('✅︎️');
