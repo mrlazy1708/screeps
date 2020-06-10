@@ -9,7 +9,7 @@ function assignTrans(tasks, creeps, val) {
             let index = host.pos.Find(creeps);
             if(index != null) {
                 let creep = Game.getObjectById(creeps[index]);
-                mDelete(creeps, index);
+                creeps.Delete(index);
                 tasks.Pop();
                 if(val(creep) < -task.pri) {
                     creep.memory.reserved = val(creep);

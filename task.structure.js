@@ -5,14 +5,14 @@ const structureTower = require('structure.tower');
 const taskStructure = {
     run: function() {
         let structures = _.groupBy(Game.structures, (structure)=>{return structure.structureType;});
-        for(let index = 0; index < Memory.containers.length; index++) {
+        for(let index = Memory.containers.length-1; index > 0; index--) {
             structureContainer.run(Game.getObjectById(Memory.containers[index]));
         }
-        for(let id in structures[STRUCTURE_EXTENSION]) {
-            structureExtension.run(structures[STRUCTURE_EXTENSION][id]);
+        for(let index = structures[STRUCTURE_EXTENSION].length-1; index > 0; index--) {
+            structureExtension.run(structures[STRUCTURE_EXTENSION][index]);
         }
-        for(let id in structures[STRUCTURE_TOWER]) {
-            structureTower.run(structures[STRUCTURE_EXTENSION][id]);
+        for(let index = structures[STRUCTURE_TOWER].length-1; index > 0; index--) {
+            structureTower.run(structures[STRUCTURE_TOWER][index]);
         }
     }
 };

@@ -42,7 +42,7 @@ const taskInit = {
             let min = 1e9, index;
             for(let i = 0; i < arr.length; i++) {
                 let host = Game.getObjectById(arr[i]);
-                if(min > this.range(host.pos)) {
+                if(min > this.Range(host.pos)) {
                     min = this.Range(host.pos);
                     index = i;
                 }
