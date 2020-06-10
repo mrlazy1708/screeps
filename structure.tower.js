@@ -2,7 +2,7 @@ const structureTower = {
     run: function(tower) {
         if(!tower.memory.wait && tower.store.getFreeCapacity[RESOURCE_ENERGY] > tower.memory.reserved) {
             tower.memory.wait = true;
-            Memory.task.collect.Insert({time: Game.time*2 - tower.memory.time, pri: 2, hostID: tower.id});
+            Memory.task.collect.Push({time: Game.time*2 - tower.memory.time, pri: 2, hostID: tower.id});
             tower.memory.time = Game.time;
         }
 

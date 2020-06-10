@@ -5,7 +5,7 @@ const workUpgrade = require('work.upgrade');
 function check(creep) {
     if(!creep.memory.wait && creep.store.getFreeCapacity(RESOURCE_ENERGY) > creep.memory.reserved) {
         creep.memory.wait = true;
-        Memory.task.collect.Insert({time: Game.time*2 - creep.memory.time, pri: 2, hostID: creep.id});
+        Memory.task.collect.Push({time: Game.time*2 - creep.memory.time, pri: 2, hostID: creep.id});
         creep.memory.time = Game.time;
     }
 }

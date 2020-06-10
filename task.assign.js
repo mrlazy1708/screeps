@@ -13,7 +13,7 @@ function assignTrans(tasks, creeps, val) {
                 tasks.Pop();
                 if(val(creep) < -task.pri) {
                     creep.memory.reserved = val(creep);
-                    tasks.Insert({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
+                    tasks.Push({time: task.time, pri: task.pri + creep.memory.reserved, hostID: host.id});
                 }
                 else {
                     creep.memory.reserved = -task.pri;
