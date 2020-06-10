@@ -8,9 +8,12 @@ const taskStructure = {
         for(let index = Memory.containers.length-1; index > 0; index--) {
             structureContainer.run(Game.getObjectById(Memory.containers[index]));
         }
-        for(let index = structures[STRUCTURE_EXTENSION].length-1; index > 0; index--) {
-            structureExtension.run(structures[STRUCTURE_EXTENSION][index]);
-        }
+
+        if(structures[STRUCTURE_EXTENSION] != undefined)
+            for(let index = structures[STRUCTURE_EXTENSION].length-1; index > 0; index--) {
+                structureExtension.run(structures[STRUCTURE_EXTENSION][index]);
+            }
+        if(structures[STRUCTURE_TOWER] != undefined)
         for(let index = structures[STRUCTURE_TOWER].length-1; index > 0; index--) {
             structureTower.run(structures[STRUCTURE_TOWER][index]);
         }
