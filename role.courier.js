@@ -2,12 +2,12 @@ const roleCourier = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
             global.courier.empty.push(creep.id);
-            creep.say('💤');
+            creep.say('💤', true);
         }
 
         if(creep.memory.state == 'carry') {
             global.courier.carry.push(creep.id);
-            creep.say('📦');
+            creep.say('📦', true);
         }
 
         if(creep.memory.state == 'get') {
@@ -24,20 +24,20 @@ const roleCourier = {
                         }
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.targetID = null;
-                        creep.say('✅︎️');
+                        creep.say('✅︎️', true);
                     }
                     else {
-                        creep.say('⏳');
+                        creep.say('⏳', true);
                     }
                 }
                 else {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#66ccff'}});
-                    creep.say('📥');
+                    creep.say('📥', true);
                 }
             }
             else {
                 creep.memory.state = 'idle';
-                creep.say('💤');
+                creep.say('💤', true);
             }
         }
 
@@ -55,22 +55,27 @@ const roleCourier = {
                         }
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.targetID = null;
-                        creep.say('✅︎️');
+                        creep.say('✅︎️', true);
                     }
                     else {
-                        creep.say('⏳');
+                        creep.say('⏳', true);
                     }
                 }
                 else {
                     creep.moveTo(target.pos, {visualizePathStyle: {stroke: '#ffcc66'}});
-                    creep.say('📤');
+                    creep.say('📤', true);
                 }
             }
             else {
                 creep.memory.state = 'carry';
-                creep.say('📦');
+                creep.say('📦', true);
             }
         }
+
+        if(creep.memory.state == 'idle' || creep.memory.state == 'carry') {
+            creep.room.nCourier.free++;
+        }
+        creep.room.nCourier.sum++;
     }
 };
 

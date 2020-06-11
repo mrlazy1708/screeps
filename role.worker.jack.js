@@ -1,6 +1,5 @@
-const workJack = {
+const roleWorkerJack = {
     run: function(creep) {
-
         if(creep.memory.state == 'idle') {
             if(creep.store[RESOURCE_ENERGY] == 0) {
                 creep.memory.state = 'get';
@@ -18,6 +17,10 @@ const workJack = {
                 let source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(source);
+                    creep.say('🎯', true);
+                }
+                else {
+                    creep.say('🚨', true);
                 }
             }
         }
@@ -44,10 +47,16 @@ const workJack = {
                 }
                 if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(target);
+                    creep.say('🎯', true);
+                }
+                else {
+                    creep.say('⚙️', true);
                 }
             }
         }
+
+        creep.room.nWorker.jack++;
     }
 };
 
-module.exports = workJack;
+module.exports = roleWorkerJack;

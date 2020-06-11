@@ -2,6 +2,9 @@ const taskRoom = {
     run: function() {
         for(let name in Game.rooms) {
             let room = Game.rooms[name], enemys = room.find(FIND_HOSTILE_CREEPS);
+            room.nHarvester = 0;
+            room.nWorker = {build: 0, jack: 0, upgrade: 0};
+            room.nCourier = {free: 0, sum: 0};
             if(enemys.length) {
                 if(!room.memory.invaded) {
                     room.memory.invaded = true;
@@ -19,7 +22,7 @@ const taskRoom = {
                         const path = PathFinder.search(creep.pos, enemys.map(object=>{return{pos: object.pos, range: 5}}), {flee: true}).path;
                         creep.move(path[0].direction);
                         creep.memory.panic = Game.time;
-                        creep.say('🐥');
+                        creep.say('🐥', true);
                     });
                 });*/
             }

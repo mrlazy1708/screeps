@@ -14,7 +14,7 @@ const roleHarvester = {
                 creep.memory.state = 'arrive';
             }
             else {
-                creep.say('💤');
+                creep.say('💤', true);
             }
         }
 
@@ -23,7 +23,7 @@ const roleHarvester = {
             if(target != null) {
                 if(!creep.pos.inRangeTo(target.pos, 0)) {
                     creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
-                    creep.say('🎯');
+                    creep.say('🎯', true);
                 }
                 else {
                     // Memory.task.spawn.Push({time: Game.time + 2 * creep.ticksToLive - 1500, pri: 2, disc: {role: 'harvester', home: creep.room.name}});
@@ -33,17 +33,17 @@ const roleHarvester = {
             }
             else {
                 creep.memory.state = 'idle';
-                creep.say('💤');
+                creep.say('💤', true);
             }
         }
         
         if(creep.memory.state == 'work') {
             if(creep.harvest(Game.getObjectById(creep.memory.sourceID)) != ERR_NOT_IN_RANGE) {
-                creep.say('🚨️️');
+                creep.say('🚨️️', true);
             }
             else {
                 creep.memory.state = 'arrive';
-                creep.say('🎯');
+                creep.say('🎯', true);
             }
         }
     }

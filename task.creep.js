@@ -1,7 +1,9 @@
 const roleCourier = require('role.courier');
 const roleHarvester = require('role.harvester');
 const roleTraveler = require('role.traveler');
-const roleWorker = require('role.worker');
+const roleWorkerBuild = require('role.worker.build');
+const roleWorkerJack = require('role.worker.jack');
+const rolwWorkerUpgrade = require('role.worker.upgrade');
 
 const taskCreep = {
     run: function() {
@@ -20,13 +22,25 @@ const taskCreep = {
                             roleHarvester.run(creep);
                         }
                         if(creep.memory.role == 'worker') {
-                            roleWorker.run(creep);
+                            if(creep.memory.work == 'build') {
+                                workBuild.run(creep);
+                            }
+                            if(creep.memory.work == 'jack') {
+                                workJack.run(creep);
+                            }
+                            if(creep.memory.work == 'upgrade') {
+                                workUpgrade.run(creep);
+                            }
                         }
                     }
                 }
             }
             else {
                 const _creep = Memory.creeps[name];
+                if(_creep.role == 'harvester') {
+                    Game.rooms[_creep.home].memory.nHarvester -= _creep.num;
+                }
+
                 if(_creep.role == 'courier') {
                     let _target = Game.getObjectById(_creep.targetID);
                     if(_target != null) {
