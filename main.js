@@ -15,9 +15,9 @@ module.exports.loop = function () {
 		taskInit.run();
 	taskExamine.run();
 		taskRoom.run();
-		taskSpawn.run();
 		taskStructure.run();
 		taskCreep.run();
+		taskSpawn.run();
 		taskAssign.run();
 	// });
 	taskReport.run();

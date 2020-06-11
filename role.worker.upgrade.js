@@ -1,4 +1,4 @@
-const rolwWorkerUpgrade = {
+const roleWorkerUpgrade = {
     run: function(creep) {
         let sum = creep.memory.reserved - creep.store.getFreeCapacity(RESOURCE_ENERGY);
         if(sum < 0) {
