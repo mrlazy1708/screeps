@@ -20,7 +20,7 @@ const taskExamine = {
                 }
             }
 
-            room.memory.capacity = spawn.room.memory.nExtension * EXTENSION_ENERGY_CAPACITY[spawn.room.controller.level];
+            room.memory.capacity = room.memory.nExtension * EXTENSION_ENERGY_CAPACITY[room.controller.level];
 
             let spawns = room.find(FIND_MY_STRUCTURES, {
                 filter: function(structure) {

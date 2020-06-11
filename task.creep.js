@@ -23,13 +23,13 @@ const taskCreep = {
                         }
                         if(creep.memory.role == 'worker') {
                             if(creep.memory.work == 'build') {
-                                workBuild.run(creep);
+                                roleWorkerBuild.run(creep);
                             }
                             if(creep.memory.work == 'jack') {
-                                workJack.run(creep);
+                                roleWorkerJack.run(creep);
                             }
                             if(creep.memory.work == 'upgrade') {
-                                workUpgrade.run(creep);
+                                rolwWorkerUpgrade.run(creep);
                             }
                         }
                     }

@@ -54,8 +54,6 @@ const roleWorkerJack = {
                 }
             }
         }
-
-        creep.room.nWorker.jack++;
     }
 };
 

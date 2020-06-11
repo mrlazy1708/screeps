@@ -55,9 +55,6 @@ const roleWorkerBuild = {
                 creep.say('✅︎️', true);
             }
         }
-
-        creep.room.nWorker.build++;
-        creep.room.nCollect += 
     }
 };
 
