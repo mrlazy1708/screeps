@@ -27,12 +27,12 @@ const taskExamine = {
                     return structure.structureType == STRUCTURE_SPAWN;
                 }
             });
-            if(spawns != null)room.memory.capacity += spawns.length * SPAWN_ENERGY_CAPACITY;
+            room.memory.capacity += spawns.length * SPAWN_ENERGY_CAPACITY;
 
             let sources = room.find(FIND_SOURCES);
-            room.memory.nSources = sources?sources.length:0;
+            room.memory.nSources = sources.length;
 
-            room.memory.vExpect = room.memory.nSources * sources[0].energyCapacity;//full load
+            room.memory.vExpect = sources.length?room.memory.nSources * sources[0].energyCapacity:0;//full load
         }
     }
 };

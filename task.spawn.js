@@ -17,16 +17,18 @@ const taskSpawn = {
             }
         }
 
-        let idleSpawn = _.filter(Game.spawns, (spawn)=>{return spawn.memory.task = null});
-        for(let task; (task = global.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
-            let index = task.pos.Find(idleSpawn);
-            if(index != null) {
-                let spawn = Game.getObjectById(idleSpawn[index]);
-                idleSpawn.Delete(index);
-                global.task.spawn.Pop();
-                spawn.memory.task = task.disc;
+        let idleSpawn = _.filter(Game.spawns, (spawn)=>{return spawn.memory.task == null});
+        if(idleSpawn != undefined) {
+            for(let task; (task = global.task.spawn.Top()) != undefined && task.time <= Game.time; ) {
+                let index = (new RoomPosition(25, 25, task.disc.home)).Find(idleSpawn.id);
+                if(index != null) {
+                    let spawn = Game.getObjectById(idleSpawn[index]);
+                    idleSpawn.Delete(index);
+                    global.task.spawn.Pop();
+                    spawn.memory.task = task.disc;
+                }
+                else break;
             }
-            else break;
         }
 
         for(let name in Game.spawns) {

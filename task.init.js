@@ -38,9 +38,9 @@ const taskInit = {
         RoomPosition.prototype.Find = function(arr) {
             let min = 1e9, index;
             for(let i = 0; i < arr.length; i++) {
-                let host = Game.getObjectById(arr[i]);
-                if(min > this.Range(host.pos)) {
-                    min = this.Range(host.pos);
+                let range = this.Range(arr[i]);
+                if(min > range) {
+                    min = range;
                     index = i;
                 }
             }

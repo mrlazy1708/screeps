@@ -1,12 +1,12 @@
 const roleCourier = {
     run: function(creep) {
         if(creep.memory.state == 'idle') {
-            global.courier.empty.push(creep.id);
+            global.courier.empty.push(creep);
             creep.say('💤', true);
         }
 
         if(creep.memory.state == 'carry') {
-            global.courier.carry.push(creep.id);
+            global.courier.carry.push(creep);
             creep.say('📦', true);
         }
 
