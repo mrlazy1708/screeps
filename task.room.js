@@ -2,9 +2,6 @@ const taskRoom = {
     run: function() {
         for(let name in Game.rooms) {
             let room = Game.rooms[name], enemys = room.find(FIND_HOSTILE_CREEPS);
-            room.nHarvester = 0;
-            room.nWorker = {build: 0, jack: 0, upgrade: 0};
-            room.nCourier = {free: 0, sum: 0};
             if(enemys.length) {
                 if(!room.memory.invaded) {
                     room.memory.invaded = true;
@@ -32,6 +29,19 @@ const taskRoom = {
                     taskExamine.run(room);
                     console.log('Enemys slayed in room '+room.name+' !');
                 }
+            }
+
+            if(room.memory.nHarvester < room.memory.containers.length) {
+                global.task.spawn.Push({time: 1, pri: room.memory.nHarvester - room.memory.containers.length, disc: {role: 'harvester', home: room.name}});
+            }
+
+            if(room.memory.vConsume < room.memory.vExpect) {
+                global.task.spawn.Push({time: 3, pri: room.memory.vContume - room.memory.vExpect, disc: {role: 'worker', home: room.name}});
+            }
+
+            if(room.memory.init == undefined) {
+                room.memory.init = true;
+                global.task.spawn.Push({time: -1, pri: -1, disc: {role: 'worker', home: room.name}});
             }
         }
     }

@@ -16,12 +16,13 @@ const roleCourier = {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
                     if(target.store[RESOURCE_ENERGY] >= creep.memory.reserved || target.memory.rate < 3.0) {
                         creep.withdraw(target, RESOURCE_ENERGY);
-                        if(creep.store.getFreeCapacity(RESOURCE_ENERGY) <= target.store[RESOURCE_ENERGY]) {
+                        if(creep.memory.reserved <= target.store[RESOURCE_ENERGY]) {
                             creep.memory.state = 'carry';
                         }
                         else {
                             creep.memory.state = 'idle';
                         }
+                        target.store[RESOURCE_ENERGY] -= Math.min(target.store[RESOURCE_ENERGY],  creep.memory.reserved);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.targetID = null;
                         creep.say('✅︎️', true);
@@ -45,14 +46,15 @@ const roleCourier = {
             let target = Game.getObjectById(creep.memory.targetID);
             if(target != null) {
                 if(creep.pos.inRangeTo(target.pos, 1)) {
-                    if(target.store.getFreeCapacity(RESOURCE_ENERGY) >= creep.memory.reserved || target.memory.rate > -3.0) {
+                    if(target.store.getCapacity(RESOURCE_ENERGY) - target.store[RESOURCE_ENERGY] >= creep.memory.reserved || target.memory.rate > -3.0) {
                         creep.transfer(target, RESOURCE_ENERGY);
-                        if(creep.store[RESOURCE_ENERGY] <= target.store.getFreeCapacity(RESOURCE_ENERGY)) {
+                        if(creep.memory.reserved <= target.store.getCapacity(RESOURCE_ENERGY) - target.store[RESOURCE_ENERGY]) {
                             creep.memory.state = 'idle';
                         }
                         else {
                             creep.memory.state = 'carry';
                         }
+                        target.store[RESOURCE_ENERGY] += Math.min(target.store.getCapacity(RESOURCE_ENERGY) - target.store[RESOURCE_ENERGY],  creep.memory.reserved);
                         target.memory.reserved -= creep.memory.reserved;
                         creep.memory.targetID = null;
                         creep.say('✅︎️', true);
@@ -71,11 +73,6 @@ const roleCourier = {
                 creep.say('📦', true);
             }
         }
-
-        if(creep.memory.state == 'idle' || creep.memory.state == 'carry') {
-            creep.room.nCourier.free++;
-        }
-        creep.room.nCourier.sum++;
     }
 };
 

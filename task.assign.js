@@ -1,16 +1,10 @@
 function assignTrans(tasks, creeps, state) {
-    for(let index = 0; index < creeps.length; index++) {
-        if(Game.getObjectById(creeps[index]) == null) {
-            creeps.Delete(index);
-        }
-    }
-
     for(let task; (task = tasks.Top()) != undefined; ) {
         let host = Game.getObjectById(task.hostID);
         if(host != undefined) {
             let index = host.pos.Find(creeps);
             if(index != null) {
-                let creep = Game.getObjectById(creeps[index]);
+                let creep = creeps[index];
                 creeps.Delete(index);
                 tasks.Pop();
                 creep.memory.reserved = state == 'get'?creep.store.getFreeCapacity(RESOURCE_ENERGY):creep.store[RESOURCE_ENERGY];
@@ -29,6 +23,10 @@ const taskAssign = {
     run: function() {
         assignTrans(global.task.sources, global.courier.empty, 'get');
         assignTrans(global.task.collect, global.courier.carry, 'give');
+
+        for(let i = global.task.sources.length; i > 1; i--) {
+            global.task.spawn.Push({time: 2, pri: 0, disc: {role: 'courier', home: Game.getObjectById(global.task.sources.Top().hostID).pos.roomName}});
+        }
     }
 };
 

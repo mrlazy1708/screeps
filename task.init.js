@@ -38,7 +38,7 @@ const taskInit = {
         RoomPosition.prototype.Find = function(arr) {
             let min = 1e9, index;
             for(let i = 0; i < arr.length; i++) {
-                let range = this.Range(arr[i]);
+                let range = this.Range(arr[i].pos);
                 if(min > range) {
                     min = range;
                     index = i;

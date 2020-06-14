@@ -1,10 +1,11 @@
 const taskExamine = {
-    run: function(room) {
+    run: function() {
         Memory.containers = [];
         for(let name in Game.rooms) {
             let room = Game.rooms[name], structures = room.find(FIND_STRUCTURES);
 
             room.memory.nExtension = 0;
+            room.memory.containers = [];
             for(let index = 0; index < structures.length; index++) {
                 const structure = structures[index];
                 if(structure.memory.reserved == undefined) {
@@ -16,23 +17,21 @@ const taskExamine = {
                 }
 
                 if(structure.structureType == STRUCTURE_CONTAINER) {
-                    Memory.containers.push(structure.id);
+                    room.memory.containers.push(structure.id);
                 }
             }
 
-            room.memory.capacity = room.memory.nExtension * EXTENSION_ENERGY_CAPACITY[room.controller.level];
+            room.memory.capacity = SPAWN_ENERGY_CAPACITY + room.memory.nExtension * EXTENSION_ENERGY_CAPACITY[room.controller.level];
 
-            let spawns = room.find(FIND_MY_STRUCTURES, {
-                filter: function(structure) {
-                    return structure.structureType == STRUCTURE_SPAWN;
-                }
-            });
-            room.memory.capacity += spawns.length * SPAWN_ENERGY_CAPACITY;
+            room.memory.vExpect = room.memory.containers.length * 10;//full load
+            
+            if(room.memory.nHarvester == undefined) {
+                room.memory.nHarvester = 0;
+            }
 
-            let sources = room.find(FIND_SOURCES);
-            room.memory.nSources = sources.length;
-
-            room.memory.vExpect = sources.length?room.memory.nSources * sources[0].energyCapacity:0;//full load
+            if(room.memory.vConsume == undefined) {
+                room.memory.vConsume = 0;
+            }
         }
     }
 };

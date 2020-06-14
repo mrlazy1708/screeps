@@ -38,13 +38,18 @@ const taskCreep = {
             else {
                 const _creep = Memory.creeps[name];
                 if(_creep.role == 'harvester') {
-                    Game.rooms[_creep.home].memory.nHarvester -= _creep.num;
+                    // if(!_creep.report)
+                    Game.rooms[_creep.home].memory.nHarvester--;
                 }
 
                 if(_creep.role == 'courier') {
                     let _target = Game.getObjectById(_creep.targetID);
                     if(_target != null) {
                         _target.memory.reserved -= _creep.reserved;
+                    }
+                    
+                    if(_creep.state != 'get' || _creep.state == 'give') {
+                        Game.rooms[_creep.home].memory.nSleep--;
                     }
                 }
                 delete Memory.creeps[name];
